@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">EncryptaApplication</string>
+    <string name="encrypta">Encrypta</string>
+    <string name="password">Password</string>
+    <string name="username">username</string>
+    <string name="textview">TextView</string>
+    <string name="Enter_username">Enter Username</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="create_an_account">Create an account</string>
+
 </resources>
