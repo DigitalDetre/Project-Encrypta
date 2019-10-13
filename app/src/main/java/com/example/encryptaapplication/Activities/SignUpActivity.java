@@ -44,11 +44,11 @@ public class SignUpActivity extends AppCompatActivity {
         btnSingup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String correo = editTextEmail.getText().toString();
+                final String email = editTextEmail.getText().toString();
                 final String name = editTextName.getText().toString();
-                if(isValidEmail(correo) && isValidPassword() && isValidName(name)){
+                if(isValidEmail(email) && isValidPassword() && isValidName(name)){
                     String password = editTextPassword.getText().toString();
-                    mAuth.createUserWithEmailAndPassword(correo, password)
+                    mAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
