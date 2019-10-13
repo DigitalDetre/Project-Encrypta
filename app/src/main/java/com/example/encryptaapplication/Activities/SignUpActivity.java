@@ -88,7 +88,7 @@ public class SignUpActivity extends AppCompatActivity {
                 return false;
             }
         }else {
-            Toast.makeText(SignUpActivity.this,"Your passoword does not match",Toast.LENGTH_SHORT).show();
+            Toast.makeText(SignUpActivity.this,"Your password does not match",Toast.LENGTH_SHORT).show();
             return false;
         }
     }
