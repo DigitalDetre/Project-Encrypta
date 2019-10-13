@@ -8,5 +8,6 @@
     <string name="enter_password">Enter Password</string>
     <string name="create_an_account">Create an account</string>
     <string name="button">Button</string>
+    <string name="log_in">Log in</string>
 
 </resources>

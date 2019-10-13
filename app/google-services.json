@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "325290489458",
+    "firebase_url": "https://encrypta-fd737.firebaseio.com",
+    "project_id": "encrypta-fd737",
+    "storage_bucket": "encrypta-fd737.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:325290489458:android:e523673f3e9c390c1fb4eb",
+        "android_client_info": {
+          "package_name": "com.example.encryptaapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "325290489458-a7d9l6e665rri0g6rj5qnong72ll4jgo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.encryptaapplication",
+            "certificate_hash": "ee416e1bce56781241e29f88f0ed7c73d1cd352e"
+          }
+        },
+        {
+          "client_id": "325290489458-jmue2aorqm63jc99iuf8g060gpgegeh3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdIMQOxeDgnkH4sb78oCjhmBagAJdzae8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "325290489458-jmue2aorqm63jc99iuf8g060gpgegeh3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
