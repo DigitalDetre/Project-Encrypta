@@ -6,32 +6,53 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="10sp">
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
+        android:text="@string/create_account_text"
+        android:textAlignment="center"
+        android:textSize="30sp" />
+
     <EditText
         android:id="@+id/idSignupName"
-        android:layout_width="match_parent"
+        android:layout_width="349dp"
         android:layout_height="wrap_content"
-        android:hint="Name"/>
+        android:layout_marginBottom="19dp"
+        android:hint="@string/name_hint" />
+
     <EditText
         android:id="@+id/idSignupEmail"
-        android:layout_width="match_parent"
+        android:layout_width="346dp"
         android:layout_height="wrap_content"
-        android:hint="email"
-        android:inputType="textEmailAddress"/>
+        android:layout_marginBottom="19dp"
+        android:hint="@string/email_hint"
+        android:inputType="textEmailAddress" />
+
     <EditText
         android:id="@+id/idSignupPassword"
-        android:layout_width="match_parent"
+        android:layout_width="346dp"
         android:layout_height="wrap_content"
-        android:hint="Password"
-        android:inputType="textPassword"/>
+        android:layout_marginBottom="19dp"
+        android:hint="@string/password_hint"
+        android:inputType="textPassword" />
+
     <EditText
         android:id="@+id/idRewritePassword"
-        android:layout_width="match_parent"
+        android:layout_width="342dp"
         android:layout_height="wrap_content"
-        android:hint="Type your password again"
-        android:inputType="textPassword"/>
+        android:layout_marginBottom="19dp"
+        android:hint="@string/re_enter_password_hint"
+        android:inputType="textPassword" />
+
     <Button
         android:id="@+id/idbuttonSignup"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Sign up"/>
+        android:layout_height="33dp"
+        android:background="#D3D3D3"
+        android:hint="@string/register_hint" />
+
+
 </LinearLayout>

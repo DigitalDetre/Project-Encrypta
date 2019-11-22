@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EncryptaApplication</string>
+    <string name="app_name">Encrypta</string>
     <string name="encrypta">Encrypta</string>
     <string name="password">Password</string>
     <string name="username">username</string>
@@ -9,5 +9,15 @@
     <string name="create_an_account">Create an account</string>
     <string name="button">Button</string>
     <string name="log_in">Log in</string>
+    <string name="create_account">Create account</string>
+    <string name="have_an_account">Have an account?</string>
+    <string name="create_account_text">Create an Account</string>
+    <string name="name_hint">Username</string>
+    <string name="email_hint">email</string>
+    <string name="password_hint">Password</string>
+    <string name="re_enter_password_hint">Re-enter Password</string>
+    <string name="register_hint">Register</string>
+    <string name="sign_in">Sign in</string>
+    <string name="forgot_password">Forgot password?</string>
 
 </resources>

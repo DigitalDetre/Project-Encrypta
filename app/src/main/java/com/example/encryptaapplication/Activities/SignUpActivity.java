@@ -1,3 +1,5 @@
+// Jamil Gonzalez
+
 package com.example.encryptaapplication.Activities;
 
 import androidx.annotation.NonNull;
@@ -46,7 +48,9 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View view) {
                 final String email = editTextEmail.getText().toString();
                 final String name = editTextName.getText().toString();
-                if(isValidEmail(email) && isValidPassword() && isValidName(name)){
+
+                if(isValidName(name) && isValidEmail(email) && isValidPassword()){
+
                     String password = editTextPassword.getText().toString();
                     mAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
@@ -54,23 +58,31 @@ public class SignUpActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         // Sign in success, update UI with the signed-in user's information
-                                        Toast.makeText(SignUpActivity.this, "You successfully sign up ", Toast.LENGTH_SHORT).show();
-
-                                    } else {
-                                        // If sign in fails, display a message to the user.
-                                        Toast.makeText(SignUpActivity.this, "Error: Could not sign up", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SignUpActivity.this, "Account created!", Toast.LENGTH_SHORT).show();
                                     }
                                 }
+
                             });
-                }else{
-                    Toast.makeText(SignUpActivity.this, "Validations working.", Toast.LENGTH_SHORT).show();
+                    // TODO: transition to the login page
                 }
+
+                // TODO: else if one of the fields is wrong, keep displaying activity until its fixed
             }
         });
 
     }
     private boolean isValidEmail(CharSequence target) {
-        return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+        if (TextUtils.isEmpty(target)) {
+            Toast.makeText(SignUpActivity.this,"Email field empty",Toast.LENGTH_SHORT).show();
+            return false;
+        } else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches()) {
+            Toast.makeText(SignUpActivity.this,"Invalid email",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        // TODO: else if email is in use
+        else {
+            return true;
+        }
     }
     public boolean isValidPassword(){
 
@@ -84,16 +96,22 @@ public class SignUpActivity extends AppCompatActivity {
             if(password.length() >= 8 && password.length() <=16){
                return true;
             }else {
-                Toast.makeText(SignUpActivity.this,"Your password must contain at least 8 characters and at most 16 characters",Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this,"Your password must be between 8 and 16 characters",Toast.LENGTH_SHORT).show();
                 return false;
             }
-        }else {
+        } else {
             Toast.makeText(SignUpActivity.this,"Your password does not match",Toast.LENGTH_SHORT).show();
             return false;
         }
     }
 
     public boolean isValidName(String name){
+        // TODO: NEEDS QUERY DATA BASE FOR USERNAMES TO MAKE SURE THE ONE ENTERED IS UNIQUE
+        // TODO: MIN NUMBER OF CHAR FOR USERNAME?
+
+        if (name.isEmpty()) {
+            Toast.makeText(SignUpActivity.this, "Username field empty", Toast.LENGTH_SHORT).show();
+        }
         return !name.isEmpty();
     }
 }

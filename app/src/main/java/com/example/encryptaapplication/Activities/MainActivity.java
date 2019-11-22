@@ -1,3 +1,5 @@
+// Jamil Gonzalez
+
 package com.example.encryptaapplication.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
