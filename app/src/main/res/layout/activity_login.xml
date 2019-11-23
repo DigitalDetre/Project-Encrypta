@@ -50,21 +50,9 @@
         android:id="@+id/password"
         android:layout_width="354dp"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
         android:layout_marginStart="20sp"
         android:layout_marginLeft="10sp"
         android:layout_above="@+id/login_btn"
-=======
-        android:layout_above="@+id/idbuttonSignup"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="72dp"
-        android:layout_marginLeft="72dp"
-        android:layout_marginEnd="57dp"
-        android:layout_marginRight="57dp"
->>>>>>> 6e666abb650daae7559945351085f87ed026a126
         android:layout_marginBottom="49dp"
         android:hint="@string/password_hint"
         android:importantForAutofill="no"
@@ -104,14 +92,8 @@
         android:layout_marginStart="14dp"
         android:background="#00FFFFFF"
         android:shadowColor="@color/colorPrimary"
-<<<<<<< HEAD
         android:text="@string/forgot_password"
         android:textColor="#4CAF50"
         android:textSize="12sp" />
-=======
-        android:textColor="#4DB6AC"
-        android:textColorHint="#4DB6AC" />
-
->>>>>>> 6e666abb650daae7559945351085f87ed026a126
 
 </RelativeLayout>
