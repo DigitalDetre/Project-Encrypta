@@ -25,10 +25,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Button login_btn, forgot_btn, cancel_btn;
+    Button login_btn, forgot_btn, cancel_btn;
     private EditText username, password;
     private FirebaseAuth mAuth;
-    private FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
         cancel_btn = (Button) findViewById(R.id.cancel_btn);
 
         mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
 
         // cancel takes user back to main page
         cancel_btn.setOnClickListener(new View.OnClickListener() {
@@ -51,7 +49,6 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
                 finish();
-                return;
             }
         });
 
@@ -74,7 +71,6 @@ public class LoginActivity extends AppCompatActivity {
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(intent);
                                     finish();
-                                    return;
                                 } else {
                                     Toast.makeText(LoginActivity.this, "Please verify your email address", Toast.LENGTH_SHORT).show();
                                 }
@@ -93,10 +89,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
 
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ResetPassword.class);
                 startActivity(intent);
                 finish();
-                return;
             }
         });
 

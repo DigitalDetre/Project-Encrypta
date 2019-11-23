@@ -25,5 +25,8 @@
     <string name="Submit">Submit</string>
     <string name="email_verification_sent">Email verification sent</string>
     <string name="verification_code">Verification code</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="Continue">Continue</string>
+    <string name="find_your_encrypta_account">Find your Encrypta account</string>
 
 </resources>
