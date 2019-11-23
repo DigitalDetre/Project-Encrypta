@@ -61,18 +61,21 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String entered_name = username.getText().toString();
                 String entered_password = password.getText().toString();
-
                 mAuth.signInWithEmailAndPassword(entered_name, entered_password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "Signing in...", Toast.LENGTH_SHORT).show();
+                            if (mAuth.getCurrentUser().isEmailVerified()) {
+                                Toast.makeText(LoginActivity.this, "Signing in...", Toast.LENGTH_SHORT).show();
 
-                            // TODO: CHANGE MAIN ACTIVITY
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
-                            finish();
-                            return;
+                                // TODO: CHANGE MAIN ACTIVITY
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                                return;
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Please verify your email address", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             Toast.makeText(LoginActivity.this, "Incorrect login", Toast.LENGTH_SHORT).show();
                         }

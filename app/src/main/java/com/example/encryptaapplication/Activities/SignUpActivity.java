@@ -63,7 +63,7 @@ public class SignUpActivity extends AppCompatActivity {
                         // This must be true
                         .setHandleCodeInApp(true)
                         .setAndroidPackageName(
-                                "com.example.encryptaapplication.EmailVerification",
+                                "com.example.encryptaapplication",
                                 true, /* installIfNotAvailable */
                                 "12"    /* minimumVersion */)
                         .build();
