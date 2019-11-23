@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         FirebaseApp.initializeApp(this);
-
         createAnAccount = (Button) findViewById(R.id.createAnAccount);
         signIn = (Button) findViewById(R.id.signIn);
 
