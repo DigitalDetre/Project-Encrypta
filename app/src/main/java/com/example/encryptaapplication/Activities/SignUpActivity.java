@@ -40,6 +40,7 @@ public class SignUpActivity extends AppCompatActivity {
         editTextPassword2 = (EditText) findViewById(R.id.idRewritePassword);
         cancel_btn = (Button) findViewById(R.id.cancel_btn);
 
+
         btnSingup = (Button) findViewById(R.id.idbuttonSignup);
 
         mAuth = FirebaseAuth.getInstance();
@@ -65,18 +66,17 @@ public class SignUpActivity extends AppCompatActivity {
 
                 if(isValidEmail(email) && isValidPassword()){
 
-                    if (validateEmail(email)) {
-
                         String password = editTextPassword.getText().toString();
-                        mAuth.createUserWithEmailAndPassword(email, password)
-                                .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
+
+                        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
+
                                         if (task.isSuccessful()) {
                                             // Sign in success, update UI with the signed-in user's information
-                                            Toast.makeText(SignUpActivity.this, "Account created!", Toast.LENGTH_SHORT).show();
-                                            // TODO: CREATE FN THAT SWITCHES TO USER PAGE ACTIVITY
-                                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                            Toast.makeText(SignUpActivity.this, "Creating account...", Toast.LENGTH_SHORT).show();
+                                            // TODO: CREATE INITIAL SETTINGS ACTIVITY WHERE USER CAN SET PROFILE NAME, PICTURE, MESSAGE SETTINGS WITH GOTO ACCOUNT BTN
+                                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                             startActivity(intent);
                                             finish();
                                             return;
@@ -84,12 +84,8 @@ public class SignUpActivity extends AppCompatActivity {
                                             Toast.makeText(SignUpActivity.this, "Account already exists", Toast.LENGTH_SHORT).show();
                                         }
                                     }
-
                                 });
-                    } else {
 
-                    }
-                    // TODO: transition to the login page
                 }
 
             }
@@ -129,10 +125,6 @@ public class SignUpActivity extends AppCompatActivity {
             Toast.makeText(SignUpActivity.this,"Your password does not match",Toast.LENGTH_SHORT).show();
             return false;
         }
-    }
-    public boolean validateEmail(String email) {
-
-        return false;
     }
 
 }

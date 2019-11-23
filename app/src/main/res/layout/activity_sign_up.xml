@@ -10,22 +10,16 @@
     <Button
         android:id="@+id/cancel_btn"
         android:layout_width="91dp"
-        android:layout_height="41dp"
+        android:layout_height="35dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="5dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="288dp"
+        android:layout_marginStart="288dp"
         android:background="#0064B5F6"
         android:text="@string/cancel"
         android:textColor="#818181" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="392dp"
-        android:layout_height="63dp"
-        android:layout_above="@+id/idSignupEmail"
-        android:layout_marginBottom="32dp"
-        android:text="@string/create_account_text"
-        android:textAlignment="center"
-        android:textSize="30sp" />
 
     <Button
         android:id="@+id/idbuttonSignup"
@@ -36,14 +30,23 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="100dp"
-        android:layout_marginEnd="122dp"
-        android:layout_marginLeft="122dp"
-        android:layout_marginRight="122dp"
-        android:layout_marginStart="122dp"
+        android:layout_marginBottom="252dp"
+        android:layout_marginEnd="130dp"
+        android:layout_marginLeft="133dp"
+        android:layout_marginRight="130dp"
+        android:layout_marginStart="133dp"
         android:background="#D3D3D3"
         android:hint="@string/register_hint" />
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="392dp"
+        android:layout_height="63dp"
+        android:layout_above="@+id/idSignupEmail"
+        android:layout_marginBottom="32dp"
+        android:text="@string/create_account_text"
+        android:textAlignment="center"
+        android:textSize="30sp" />
     <EditText
         android:id="@+id/idSignupEmail"
         android:layout_width="match_parent"
@@ -58,7 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/idbuttonSignup"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="15dp"
         android:hint="@string/re_enter_password_hint"
         android:inputType="textPassword" />
 
@@ -70,7 +73,6 @@
         android:layout_marginBottom="15dp"
         android:hint="@string/password_hint"
         android:inputType="textPassword" />
-
 
 
 </RelativeLayout>

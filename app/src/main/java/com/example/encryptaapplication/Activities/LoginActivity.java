@@ -2,6 +2,7 @@
 
 package com.example.encryptaapplication.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -14,6 +15,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.encryptaapplication.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -35,14 +40,11 @@ public class LoginActivity extends AppCompatActivity {
         forgot_btn = (Button) findViewById(R.id.forgot_btn);
         cancel_btn = (Button) findViewById(R.id.cancel_btn);
 
+        mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-
-        String entered_name = username.getText().toString();
-        String entered_password = password.getText().toString();
 
         // cancel takes user back to main page
         cancel_btn.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -57,11 +59,25 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                // TODO: CHANGE MAIN ACTIVITY
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
-                return;
+                String entered_name = username.getText().toString();
+                String entered_password = password.getText().toString();
+
+                mAuth.signInWithEmailAndPassword(entered_name, entered_password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(LoginActivity.this, "Signing in...", Toast.LENGTH_SHORT).show();
+
+                            // TODO: CHANGE MAIN ACTIVITY
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                            return;
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Incorrect login", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         });
 
