@@ -2,6 +2,7 @@
 
 package com.example.encryptaapplication.Activities;
 
+import com.example.encryptaapplication.Activities.MainActivity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -54,33 +55,35 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // login takes user to his page (TODO: JOSH)
+
         login_btn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 String entered_name = username.getText().toString();
                 String entered_password = password.getText().toString();
-                mAuth.signInWithEmailAndPassword(entered_name, entered_password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            if (mAuth.getCurrentUser().isEmailVerified()) {
-                                Toast.makeText(LoginActivity.this, "Signing in...", Toast.LENGTH_SHORT).show();
+                if (isValidEmail(entered_name) && isValidPassword(entered_password)) {
+                    mAuth.signInWithEmailAndPassword(entered_name, entered_password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                if (mAuth.getCurrentUser().isEmailVerified()) {
+                                    Toast.makeText(LoginActivity.this, "Signing in...", Toast.LENGTH_SHORT).show();
 
-                                // TODO: CHANGE MAIN ACTIVITY
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                startActivity(intent);
-                                finish();
-                                return;
+                                    // TODO: CHANGE MAIN ACTIVITY
+                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                    return;
+                                } else {
+                                    Toast.makeText(LoginActivity.this, "Please verify your email address", Toast.LENGTH_SHORT).show();
+                                }
                             } else {
-                                Toast.makeText(LoginActivity.this, "Please verify your email address", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Incorrect login", Toast.LENGTH_SHORT).show();
                             }
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Incorrect login", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                });
+                    });
+                }
             }
         });
 
@@ -98,7 +101,30 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         }
-
+    private boolean isValidEmail(CharSequence target) {
+        if (TextUtils.isEmpty(target)) {
+            Toast.makeText(LoginActivity.this,"Email field empty",Toast.LENGTH_SHORT).show();
+            return false;
+        } else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches()) {
+            Toast.makeText(LoginActivity.this,"Invalid email",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        // TODO: else if email is in use
+        else {
+            return true;
+        }
     }
+
+    public boolean isValidPassword(String password){
+
+            if(password.length() >= 8 && password.length() <=16){
+                return true;
+            }else {
+                Toast.makeText(LoginActivity.this,"Your password must be between 8 and 16 characters",Toast.LENGTH_SHORT).show();
+                return false;
+            }
+    }
+
+}
 
 
