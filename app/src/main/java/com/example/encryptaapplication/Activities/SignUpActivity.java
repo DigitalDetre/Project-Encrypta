@@ -103,7 +103,6 @@ public class SignUpActivity extends AppCompatActivity {
 
                                             HashMap<String, String> userMap = new HashMap<>();
                                             userMap.put("name", "Display Name");
-                                            userMap.put("status", "Hey There! I'm using Encrypta.");
                                             userMap.put("image","default");
                                             userMap.put("thumb_image","default");
 

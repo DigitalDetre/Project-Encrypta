@@ -3,7 +3,9 @@ package com.example.encryptaapplication.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,9 +27,7 @@ public class UserSettingsActivity extends AppCompatActivity {
 
     private CircleImageView mProfilePicture;
     private TextView mName;
-    private TextView mStatus;
 
-    private Button mStatusBtn;
     private Button mProfilePictureBtn;
 
     @Override
@@ -37,9 +37,7 @@ public class UserSettingsActivity extends AppCompatActivity {
 
         mProfilePicture = (CircleImageView) findViewById(R.id.profile_pic);
         mName = (TextView) findViewById(R.id.display_name);
-        mStatus = (TextView) findViewById(R.id.settings_status);
 
-        mStatusBtn = (Button) findViewById(R.id.btn_status);
         mProfilePictureBtn = (Button) findViewById(R.id.update_ppic);
 
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -58,8 +56,6 @@ public class UserSettingsActivity extends AppCompatActivity {
                 String thumb_image = dataSnapshot.child("thumb_image").getValue().toString();
 
                 mName.setText(name);
-                mStatus.setText(status);
-
 
             }
 
@@ -68,6 +64,7 @@ public class UserSettingsActivity extends AppCompatActivity {
 
             }
         });
+
     }
 
 }

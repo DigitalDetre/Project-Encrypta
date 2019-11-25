@@ -34,16 +34,6 @@
         android:text="@string/name"
         android:textSize="30sp" />
 
-    <TextView
-        android:id="@+id/settings_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="336dp"
-        android:text="@string/status"
-        android:textSize="25sp" />
-
     <Button
         android:id="@+id/btn_delete"
         android:layout_width="wrap_content"
@@ -59,17 +49,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="162dp"
+        android:layout_marginBottom="147dp"
         android:text="@string/change_name" />
-
-    <Button
-        android:id="@+id/btn_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="97dp"
-        android:text="@string/change_status" />
 
     <Button
         android:id="@+id/update_ppic"
@@ -77,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="31dp"
+        android:layout_marginBottom="71dp"
         android:text="@string/change_profile_picture" />
 
 </RelativeLayout>
