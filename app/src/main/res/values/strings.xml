@@ -32,5 +32,9 @@
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="log_out">Log out</string>
+    <string name="all_users">All Users</string>
+    <string name="account_settings">account_settings</string>
+    <string name="account_setting">Account Settings</string>
 
 </resources>

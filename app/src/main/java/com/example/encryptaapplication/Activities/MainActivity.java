@@ -16,7 +16,7 @@ import com.google.firebase.FirebaseApp;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button createAnAccount, signIn;
+    private Button createAnAccount, signIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
