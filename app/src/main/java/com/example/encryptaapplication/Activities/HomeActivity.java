@@ -79,6 +79,13 @@ public class HomeActivity extends AppCompatActivity {
              startActivity(mainIntent);
              finish();
          }
+        if(item.getItemId() == R.id.home_settings){
+
+            Intent settingsIntent = new Intent(HomeActivity.this, UserSettingsActivity.class);
+            startActivity(settingsIntent);
+
+        }
+
          return true;
     }
 

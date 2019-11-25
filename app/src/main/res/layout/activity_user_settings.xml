@@ -4,23 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="30dp"
+    android:layout_gravity="center|top"
+    android:layout_marginTop="0dp"
     tools:context=".Activities.UserSettingsActivity">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_pic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="160dp"
+        android:layout_height="153dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="66dp"
-        android:layout_marginRight="66dp"
+        android:layout_marginTop="47dp"
+        android:layout_marginEnd="121dp"
+        android:layout_marginRight="121dp"
         android:background="#F7F8F8"
         android:foregroundGravity="top|center"
-        tools:src="@drawable/default_user_profile_pic" />
+        android:src="@mipmap/default_icon"
+        tools:src="@mipmap/default_icon" />
 
     <TextView
         android:id="@+id/display_name"
@@ -28,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="383dp"
+        android:layout_marginBottom="406dp"
         android:text="@string/name"
         android:textSize="30dp" />
 
@@ -59,23 +61,23 @@
         android:layout_marginBottom="97dp"
         android:text="@string/change_status" />
 
-    <TextView
-        android:id="@+id/settings_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="324dp"
-        android:text="@string/status"
-        android:textSize="30dp" />
-
     <Button
         android:id="@+id/update_ppic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="29dp"
+        android:layout_marginBottom="31dp"
         android:text="@string/change_profile_picture" />
+
+    <TextView
+        android:id="@+id/settings_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="336dp"
+        android:text="@string/status"
+        android:textSize="25dp" />
 
 </RelativeLayout>
