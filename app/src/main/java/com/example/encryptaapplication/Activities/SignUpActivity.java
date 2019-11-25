@@ -5,6 +5,7 @@ package com.example.encryptaapplication.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -29,6 +30,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText editTextEmail,editTextPassword,editTextPassword2;
     Button btnSingup, cancel_btn;
     private FirebaseAuth mAuth;
+    private ProgressDialog mSignupProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,8 @@ public class SignUpActivity extends AppCompatActivity {
         cancel_btn = (Button) findViewById(R.id.cancel_btn);
         btnSingup = (Button) findViewById(R.id.idbuttonSignup);
         mAuth = FirebaseAuth.getInstance();
+
+        mSignupProgress = new ProgressDialog(this);
 
 
         // cancel takes user back to main page
@@ -75,6 +79,11 @@ public class SignUpActivity extends AppCompatActivity {
                 final String password = editTextPassword.getText().toString();
 
                 if (isValidEmail(email) && isValidPassword()) {
+                    mSignupProgress.setTitle("Creating a new Account");
+                    mSignupProgress.setMessage("Please wait a few second ...");
+                    mSignupProgress.setCanceledOnTouchOutside(false);
+                    mSignupProgress.show();
+
                     mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -84,11 +93,13 @@ public class SignUpActivity extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
+                                            mSignupProgress.dismiss();
                                             Toast.makeText(SignUpActivity.this, "Email verification sent", Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                                             startActivity(intent);
                                             finish();
                                         } else {
+                                            mSignupProgress.dismiss();
                                             Toast.makeText(SignUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                         }
                                     }
