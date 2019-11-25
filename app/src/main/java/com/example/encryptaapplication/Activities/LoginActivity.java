@@ -6,6 +6,7 @@ import com.example.encryptaapplication.Activities.MainActivity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -42,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+
         // cancel takes user back to main page
         cancel_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,8 +68,6 @@ public class LoginActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 if (mAuth.getCurrentUser().isEmailVerified()) {
                                     Toast.makeText(LoginActivity.this, "Signing in...", Toast.LENGTH_SHORT).show();
-
-                                    // TODO: CHANGE MAIN ACTIVITY
                                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                                     startActivity(intent);
                                     finish();

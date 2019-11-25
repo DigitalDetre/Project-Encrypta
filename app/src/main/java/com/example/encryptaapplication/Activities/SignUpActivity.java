@@ -99,7 +99,7 @@ public class SignUpActivity extends AppCompatActivity {
                                             startActivity(intent);
                                             finish();
                                         } else {
-                                            mSignupProgress.dismiss();
+                                            mSignupProgress.hide();
                                             Toast.makeText(SignUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                         }
                                     }
