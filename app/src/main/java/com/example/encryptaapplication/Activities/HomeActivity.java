@@ -3,6 +3,10 @@ package com.example.encryptaapplication.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,12 +14,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.encryptaapplication.R;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class HomeActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Toolbar mToolBar;
+    private ViewPager mViewPager;
+    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private TabLayout mTabLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +34,14 @@ public class HomeActivity extends AppCompatActivity {
 
         setSupportActionBar(mToolBar);
         getSupportActionBar().setTitle("Encrypta");
+
+        mViewPager = (ViewPager) findViewById(R.id.tabPage);
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mTabLayout = (TabLayout) findViewById(R.id.home_tabs);
+        mTabLayout.setupWithViewPager(mViewPager);
+
 
     }
    // Checks if the user is already logged in if not go back to the main page
@@ -64,4 +81,5 @@ public class HomeActivity extends AppCompatActivity {
          }
          return true;
     }
+
 }

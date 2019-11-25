@@ -37,4 +37,9 @@
     <string name="account_settings">account_settings</string>
     <string name="account_setting">Account Settings</string>
 
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="friend_requests_page">friend_request_page</string>
+    <string name="contacts_page">contacts_page</string>
+    <string name="chat_page">chat_page</string>
+
 </resources>

@@ -6,19 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".Activities.HomeActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
     <include layout="@layout/app_bar_layout" android:id="@+id/home_page_toolbar" />
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginEnd="95dp"
-        android:layout_marginRight="95dp"
-        android:layout_marginBottom="339dp"
-        android:gravity="center"
-        android:text="This is the main page"
-        android:textSize="24sp" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/home_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/tabPage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp">
+
+
+    </androidx.viewpager.widget.ViewPager>
+
 </RelativeLayout>
