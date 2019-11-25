@@ -22,7 +22,10 @@ import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 
 public class SignUpActivity extends AppCompatActivity {
@@ -31,6 +34,7 @@ public class SignUpActivity extends AppCompatActivity {
     Button btnSingup, cancel_btn;
     private FirebaseAuth mAuth;
     private ProgressDialog mSignupProgress;
+    private DatabaseReference myDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,11 +97,30 @@ public class SignUpActivity extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-                                            mSignupProgress.dismiss();
-                                            Toast.makeText(SignUpActivity.this, "Email verification sent", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                            startActivity(intent);
-                                            finish();
+                                           FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
+                                           String uid = current_user.getUid();
+                                           myDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+
+                                            HashMap<String, String> userMap = new HashMap<>();
+                                            userMap.put("name", "Display Name");
+                                            userMap.put("status", "Hey There! I'm using Encrypta.");
+                                            userMap.put("image","default");
+                                            userMap.put("thumb_image","default");
+
+
+                                            myDatabase.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if(task.isSuccessful()) {
+                                                        mSignupProgress.dismiss();
+                                                        Toast.makeText(SignUpActivity.this, "Email verification sent", Toast.LENGTH_SHORT).show();
+                                                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }
+                                                }
+                                            });
+
                                         } else {
                                             mSignupProgress.hide();
                                             Toast.makeText(SignUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();

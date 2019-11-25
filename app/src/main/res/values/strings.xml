@@ -41,5 +41,12 @@
     <string name="friend_requests_page">friend_request_page</string>
     <string name="contacts_page">contacts_page</string>
     <string name="chat_page">chat_page</string>
+    <string name="name">Name</string>
+    <string name="Set_Delete_policy">Set_Delete_policy</string>
+    <string name="change_name">Change Name</string>
+    <string name="change_status">Change Status</string>
+    <string name="status">Status</string>
+    <string name="set_delete_policy">Set Delete policy</string>
+    <string name="change_profile_picture">Change Profile Picture</string>
 
 </resources>
