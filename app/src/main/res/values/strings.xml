@@ -14,7 +14,7 @@
     <string name="create_account_text">Create an Account</string>
     <string name="name_hint">Username</string>
     <string name="email_hint">Email</string>
-    <string name="username_hint">Username</string>
+    <string name="username_hint">Username or Email</string>
     <string name="password_hint">Password</string>
     <string name="re_enter_password_hint">Re-enter Password</string>
     <string name="register_hint">Register</string>
