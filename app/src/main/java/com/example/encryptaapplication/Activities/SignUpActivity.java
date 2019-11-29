@@ -165,8 +165,9 @@ public class SignUpActivity extends AppCompatActivity {
                                     myDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
 
                                     HashMap<String, String> userMap = new HashMap<>();
+                                    userMap.put("email", email);
                                     userMap.put("name", "Display Name");
-                                    userMap.put("username", edittextUsername.getText().toString());
+                                    userMap.put("username", edittextUsername.getText().toString().toLowerCase());
                                     userMap.put("image", "default");
                                     userMap.put("thumb_image", "default");
 
@@ -268,7 +269,6 @@ public class SignUpActivity extends AppCompatActivity {
             }else {
                 Toast.makeText(SignUpActivity.this,"Your password must be between 8 and 16 characters",Toast.LENGTH_SHORT).show();
                 return false;
-                
             }
         } else {
             Toast.makeText(SignUpActivity.this,"Your password does not match",Toast.LENGTH_SHORT).show();
