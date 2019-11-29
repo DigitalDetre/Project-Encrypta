@@ -268,6 +268,7 @@ public class SignUpActivity extends AppCompatActivity {
             }else {
                 Toast.makeText(SignUpActivity.this,"Your password must be between 8 and 16 characters",Toast.LENGTH_SHORT).show();
                 return false;
+                
             }
         } else {
             Toast.makeText(SignUpActivity.this,"Your password does not match",Toast.LENGTH_SHORT).show();
