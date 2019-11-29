@@ -40,11 +40,11 @@
         android:id="@+id/username"
         android:layout_width="349dp"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/password"
         android:layout_marginStart="20sp"
         android:layout_marginLeft="10sp"
-        android:layout_above="@+id/password"
         android:layout_marginBottom="15dp"
-        android:hint="@string/email_hint"
+        android:hint="@string/username_hint"
         android:importantForAutofill="no"
         android:inputType="textPersonName" />
 
