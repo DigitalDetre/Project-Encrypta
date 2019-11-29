@@ -235,6 +235,7 @@ public class LoginActivity extends AppCompatActivity {
         }else {
             Toast.makeText(LoginActivity.this,"Your password must be between 8 and 16 characters",Toast.LENGTH_SHORT).show();
             return false;
+            
         }
     }
 
