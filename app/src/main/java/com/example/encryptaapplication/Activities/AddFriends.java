@@ -108,7 +108,6 @@ public class AddFriends extends Activity {
                             }else{
                                 if(dialog!=null&dialog.isShowing()){ dialog.dismiss(); }
                                 Toast.makeText(AddFriends.this, "No UserFound", Toast.LENGTH_SHORT).show();
-
                             }
                         }
 
