@@ -5,17 +5,29 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.encryptaapplication.Entities.User;
 import com.example.encryptaapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,6 +42,9 @@ import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.File;
+import java.util.HashMap;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserSettingsActivity extends AppCompatActivity {
@@ -39,12 +54,15 @@ public class UserSettingsActivity extends AppCompatActivity {
     private CircleImageView mProfilePicture;
     private TextView mName;
 
-    private Button mProfilePictureBtn;
+    private Button mProfilePictureBtn,btn_changename;
 
     private static final int Gallery_pick = 1;
 
     private StorageReference mStorageRef;
     private TextView mUsername;
+    private String profile_pic_name;
+    ProgressBar picloadbar;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +72,8 @@ public class UserSettingsActivity extends AppCompatActivity {
         mProfilePicture = (CircleImageView) findViewById(R.id.profile_pic);
         mName = (TextView) findViewById(R.id.display_name);
         mUsername = (TextView) findViewById(R.id.display_username);
-
+        picloadbar = (ProgressBar)findViewById(R.id.pic_loadbar);
+        btn_changename = (Button)findViewById(R.id.btn_name);
         mProfilePictureBtn = (Button) findViewById(R.id.update_ppic);
 
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -78,6 +97,10 @@ public class UserSettingsActivity extends AppCompatActivity {
 
                     mName.setText(name);
                     mUsername.setText(username);
+                    final StorageReference ref = mStorageRef.child("profile_pic").child(image);
+                    SetProfilePicture(ref);
+
+
                 }catch (NullPointerException e){
                     e.printStackTrace();
                 }
@@ -103,6 +126,14 @@ public class UserSettingsActivity extends AppCompatActivity {
 
             }
         });
+        btn_changename.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog();
+            }
+        });
+
+
     }
 
     @Override
@@ -112,6 +143,7 @@ public class UserSettingsActivity extends AppCompatActivity {
         if(requestCode == Gallery_pick && resultCode == RESULT_OK){
 
             Uri imageUri = data.getData();
+
 
             CropImage.activity(imageUri)
                     .setAspectRatio(1, 1)
@@ -124,13 +156,26 @@ public class UserSettingsActivity extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
-                StorageReference filepath = mStorageRef.child("profile_pic").child("profile_image.jpg");
+                File ff = new File(resultUri.toString());
+                String extension = ff.getAbsolutePath().substring(ff.getAbsolutePath().lastIndexOf("."));
+                profile_pic_name = mUsername.getText().toString()+"_profile_image"+extension;
+                Log.d("profile_pic_name",profile_pic_name);
+                final StorageReference filepath = mStorageRef.child("profile_pic").child(profile_pic_name);
 
                 filepath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(UserSettingsActivity.this,"Working",Toast.LENGTH_LONG).show();
+
+                            mUserDatabase.child("image").setValue(profile_pic_name).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    SetProfilePicture(filepath);
+                                }
+                            });
+
+
+
                         }else{
                             Toast.makeText(UserSettingsActivity.this,"error not uploading",Toast.LENGTH_LONG).show();
 
@@ -143,5 +188,73 @@ public class UserSettingsActivity extends AppCompatActivity {
             }
         }
     }
+
+
+    void SetProfilePicture(StorageReference reference){
+        picloadbar.setVisibility(View.VISIBLE);
+        final long ONE_MEGABYTE = 1024 * 1024;
+        reference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytesPrm) {
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytesPrm, 0, bytesPrm.length);
+                mProfilePicture.setImageBitmap(bmp);
+                picloadbar.setVisibility(View.GONE);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(UserSettingsActivity.this,"unable to load profile pic",Toast.LENGTH_SHORT).show();
+                picloadbar.setVisibility(View.GONE);
+                mProfilePicture.setImageResource(R.mipmap.default_icon);
+            }
+        });
+    }
+    private void Dialog(){
+        if(dialog!=null) {
+            if (dialog.isShowing()) {
+
+                dialog.dismiss();
+            }
+        }
+        dialog = new AlertDialog.Builder(this).create();
+        View view = LayoutInflater.from(this).inflate(R.layout.changename_layout,null,false);
+        final EditText newname = view.findViewById(R.id.changename_edittext);
+        Button confirm = view.findViewById(R.id.confirm_button);
+        Button cancel = view.findViewById(R.id.cancel_button);
+        dialog.setCanceledOnTouchOutside(false);
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (TextUtils.isEmpty(newname.getText().toString())) {
+                    Toast.makeText(UserSettingsActivity.this,"name  field empty",Toast.LENGTH_SHORT).show();
+
+                }else{
+                    mUserDatabase.child("name").setValue(newname.getText().toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(UserSettingsActivity.this,"name is changed",Toast.LENGTH_SHORT).show();
+                            mName.setText(newname.getText().toString());
+                            dialog.dismiss();
+
+                        }
+                    });
+
+                }
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.setView(view);
+        dialog.show();
+
+    }
+
+
+
 }
 

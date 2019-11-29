@@ -14,7 +14,7 @@
     <string name="create_account_text">Create an Account</string>
     <string name="name_hint">Username</string>
     <string name="email_hint">Email</string>
-    <string name="username_hint">Username or Email</string>
+    <string name="username_hint">Username</string>
     <string name="password_hint">Password</string>
     <string name="re_enter_password_hint">Re-enter Password</string>
     <string name="register_hint">Register</string>
@@ -49,5 +49,8 @@
     <string name="status">Status</string>
     <string name="set_delete_policy">Set Delete policy</string>
     <string name="change_profile_picture">Change Profile Picture</string>
+    <string name="update_name">Update name</string>
+    <string name="new_name">new name</string>
+    <string name="confirm">confirm</string>
 
 </resources>

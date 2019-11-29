@@ -24,6 +24,22 @@
         android:src="@mipmap/default_icon"
         tools:src="@mipmap/default_icon" />
 
+    <ProgressBar
+        android:id="@+id/pic_loadbar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="181dp"
+        android:layout_marginRight="181dp"
+        android:background="#00F7F8F8"
+        android:foregroundGravity="top|center"
+        android:visibility="gone"
+
+        />
 
     <TextView
         android:id="@+id/display_name"
@@ -35,6 +51,7 @@
         android:layout_marginTop="14dp"
         android:text="@string/name"
         android:textSize="20sp"
+        android:textAlignment="center"
         android:layout_marginLeft="10dp" />
 
     <LinearLayout
@@ -54,7 +71,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:textAlignment="center"
             android:text="Username - "
             android:textSize="20sp" />
 
@@ -62,7 +79,6 @@
             android:id="@+id/display_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:text="@string/username"
             android:textSize="20sp" />
     </LinearLayout>
