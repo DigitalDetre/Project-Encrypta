@@ -44,6 +44,7 @@ public class UserSettingsActivity extends AppCompatActivity {
     private static final int Gallery_pick = 1;
 
     private StorageReference mStorageRef;
+    private TextView mUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class UserSettingsActivity extends AppCompatActivity {
 
         mProfilePicture = (CircleImageView) findViewById(R.id.profile_pic);
         mName = (TextView) findViewById(R.id.display_name);
+        mUsername = (TextView) findViewById(R.id.display_username);
 
         mProfilePictureBtn = (Button) findViewById(R.id.update_ppic);
 
@@ -65,14 +67,20 @@ public class UserSettingsActivity extends AppCompatActivity {
 
         mUserDatabase.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                String name = dataSnapshot.child("name").getValue().toString();
-                String image = dataSnapshot.child("image").getValue().toString();
-                String thumb_image = dataSnapshot.child("thumb_image").getValue().toString();
 
-                mName.setText(name);
+                try {
+                    String name = dataSnapshot.child("name").getValue().toString();
+                    String username = dataSnapshot.child("username").getValue().toString();
+                    String image = dataSnapshot.child("image").getValue().toString();
+                    String thumb_image = dataSnapshot.child("thumb_image").getValue().toString();
 
+                    mName.setText(name);
+                    mUsername.setText(username);
+                }catch (NullPointerException e){
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -136,5 +144,4 @@ public class UserSettingsActivity extends AppCompatActivity {
         }
     }
 }
-
 

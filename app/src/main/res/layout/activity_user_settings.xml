@@ -24,15 +24,49 @@
         android:src="@mipmap/default_icon"
         tools:src="@mipmap/default_icon" />
 
+
     <TextView
         android:id="@+id/display_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/profile_pic"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="406dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="14dp"
         android:text="@string/name"
-        android:textSize="30sp" />
+        android:textSize="20sp"
+        android:layout_marginLeft="10dp" />
+
+    <LinearLayout
+        android:id="@+id/usernamelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/display_name"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="345dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Username - "
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/display_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@string/username"
+            android:textSize="20sp" />
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/btn_delete"

@@ -66,7 +66,8 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                if (mAuth.getCurrentUser().isEmailVerified()) {
+                                //remove not verified after test
+                                if (!mAuth.getCurrentUser().isEmailVerified()||mAuth.getCurrentUser().isEmailVerified()) {
                                     Toast.makeText(LoginActivity.this, "Signing in...", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                                     startActivity(intent);
@@ -95,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        }
+    }
     private boolean isValidEmail(CharSequence target) {
         if (TextUtils.isEmpty(target)) {
             Toast.makeText(LoginActivity.this,"Email field empty",Toast.LENGTH_SHORT).show();
@@ -112,14 +113,13 @@ public class LoginActivity extends AppCompatActivity {
 
     public boolean isValidPassword(String password){
 
-            if(password.length() >= 8 && password.length() <=16){
-                return true;
-            }else {
-                Toast.makeText(LoginActivity.this,"Your password must be between 8 and 16 characters",Toast.LENGTH_SHORT).show();
-                return false;
-            }
+        if(password.length() >= 8 && password.length() <=16){
+            return true;
+        }else {
+            Toast.makeText(LoginActivity.this,"Your password must be between 8 and 16 characters",Toast.LENGTH_SHORT).show();
+            return false;
+        }
     }
 
 }
-
 
