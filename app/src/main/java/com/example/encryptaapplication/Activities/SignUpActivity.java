@@ -32,8 +32,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.NotNull;
+import com.virgilsecurity.android.common.callback.OnGetTokenCallback;
+import com.virgilsecurity.android.ethree.interaction.EThree;
+import com.virgilsecurity.common.callback.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class SignUpActivity extends AppCompatActivity {
@@ -44,6 +49,7 @@ public class SignUpActivity extends AppCompatActivity {
     private ProgressDialog mSignupProgress;
     private DatabaseReference myDatabase;
     private boolean userexists=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
