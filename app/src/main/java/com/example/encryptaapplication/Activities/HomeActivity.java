@@ -44,7 +44,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
     }
-   // Checks if the user is already logged in if not go back to the main page
+    // Checks if the user is already logged in if not go back to the main page
     @Override
     public void onStart() {
         super.onStart();
@@ -61,32 +61,37 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-         super.onCreateOptionsMenu(menu);
-         getMenuInflater().inflate(R.menu.home_menu,menu);
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.home_menu,menu);
 
-         return true;
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-         super.onOptionsItemSelected(item);
+        super.onOptionsItemSelected(item);
 
-         if(item.getItemId() == R.id.home_logout){
+        if(item.getItemId() == R.id.home_logout){
 
-             FirebaseAuth.getInstance().signOut();
+            FirebaseAuth.getInstance().signOut();
 
-             Intent mainIntent = new Intent(HomeActivity.this, MainActivity.class);
-             startActivity(mainIntent);
-             finish();
-         }
+            Intent mainIntent = new Intent(HomeActivity.this, MainActivity.class);
+            startActivity(mainIntent);
+            finish();
+        }
         if(item.getItemId() == R.id.home_settings){
 
             Intent settingsIntent = new Intent(HomeActivity.this, UserSettingsActivity.class);
             startActivity(settingsIntent);
 
         }
+        if(item.getItemId()==R.id.home_all){
 
-         return true;
+            Intent addafriend = new Intent(HomeActivity.this,AddFriends.class);
+            startActivity(addafriend);
+        }
+
+        return true;
     }
 
 }
