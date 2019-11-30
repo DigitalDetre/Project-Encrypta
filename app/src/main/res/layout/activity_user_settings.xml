@@ -10,15 +10,10 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_pic"
-        android:layout_width="160dp"
+        android:layout_width="match_parent"
         android:layout_height="153dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="47dp"
-        android:layout_marginEnd="121dp"
-        android:layout_marginRight="121dp"
         android:background="#F7F8F8"
         android:foregroundGravity="top|center"
         android:src="@mipmap/default_icon"
@@ -48,7 +43,7 @@
         android:layout_below="@+id/profile_pic"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="30dp"
         android:text="@string/name"
         android:textSize="20sp"
         android:textAlignment="center"
@@ -58,40 +53,30 @@
     <TextView
         android:id="@+id/display_username"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="51dp"
         android:layout_above="@+id/btn_name"
+
         android:layout_below="@+id/display_name"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="147dp"
-        android:layout_marginLeft="147dp"
-        android:layout_marginTop="110dp"
-        android:layout_marginEnd="136dp"
-        android:layout_marginRight="136dp"
-        android:layout_marginBottom="79dp"
+        android:layout_marginBottom="7dp"
+        android:layout_marginTop="20dp"
         android:text="@string/username"
         android:textAlignment="center"
         android:textSize="20sp" />
 
     <Button
         android:id="@+id/btn_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="147dp"
+        android:layout_above="@+id/update_ppic"
+        android:layout_marginBottom="0dp"
         android:text="@string/change_name" />
 
     <Button
         android:id="@+id/update_ppic"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="71dp"
+        android:layout_marginBottom="300dp"
         android:text="@string/change_profile_picture" />
 
 </RelativeLayout>
