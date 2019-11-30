@@ -43,7 +43,7 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private ProgressDialog mSignupProgress;
     private DatabaseReference myDatabase;
-    private boolean userexists=false;
+    private boolean userexists = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,15 +109,13 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
                             userexists=true;
-                            Toast.makeText(SignUpActivity.this,"USername exist",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignUpActivity.this,"Username in use",Toast.LENGTH_SHORT).show();
                             edittextUsername.setTextColor(Color.RED);
 
 
-                        }else{
+                        } else {
                             userexists = false;
                             edittextUsername.setTextColor(Color.GREEN);
-
-
                         }
                     }
 
@@ -147,7 +145,7 @@ public class SignUpActivity extends AppCompatActivity {
                     final String password = editTextPassword.getText().toString();
 
                     if (isValidEmail(email) && isValidPassword()) {
-                        mSignupProgress.setTitle("Creating a new Account");
+                        mSignupProgress.setTitle("Creating account");
                         mSignupProgress.setMessage("Please wait a few second ...");
                         mSignupProgress.setCanceledOnTouchOutside(false);
                         mSignupProgress.show();
@@ -161,8 +159,8 @@ public class SignUpActivity extends AppCompatActivity {
 
                                     //extra code
                                     FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
-                                    String uid = current_user.getUid();
-                                    myDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+                                    String id = current_user.getUid();
+                                    myDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(id);
 
                                     HashMap<String, String> userMap = new HashMap<>();
                                     userMap.put("email", email);
@@ -264,7 +262,7 @@ public class SignUpActivity extends AppCompatActivity {
 
 
         if(password.equals(password2)){
-            if(password.length() >= 8 && password.length() <=16){
+            if(password.length() >= 8 && password.length() <= 16){
                 return true;
             }else {
                 Toast.makeText(SignUpActivity.this,"Your password must be between 8 and 16 characters",Toast.LENGTH_SHORT).show();
