@@ -158,36 +158,6 @@ public class SignUpActivity extends AppCompatActivity {
 
 
                                 if (task.isSuccessful()) {
-//
-//                                //extra code by developer sampat sharma
-//                                FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
-//                                String uid = current_user.getUid();
-//                                myDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
-//
-//                                HashMap<String, String> userMap = new HashMap<>();
-//                                userMap.put("email", email);
-//                                userMap.put("name", "Display Name");
-//                                userMap.put("username", edittextUsername.getText().toString().toLowerCase());
-//                                userMap.put("image", "default");
-//                                userMap.put("thumb_image", "default");
-//
-//
-//                                myDatabase.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                    @Override
-//                                    public void onComplete(@NonNull Task<Void> task) {
-//                                        if (task.isSuccessful()) {
-//                                            mSignupProgress.dismiss();
-//                                            Toast.makeText(SignUpActivity.this, "Email verification sent", Toast.LENGTH_SHORT).show();
-//                                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-//                                            startActivity(intent);
-//                                            finish();
-//                                        }
-//                                    }
-//                                });
-
-
-                                    //end extra code
-
 
                                     mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
