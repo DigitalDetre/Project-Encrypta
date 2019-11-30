@@ -54,8 +54,13 @@
     <string name="confirm">confirm</string>
     <string name="add_friends">Add a friend</string>
     <string name="search_friends">search friends</string>
-    <string name="Response" >Respond to request</string>
+    <string name="Response">Respond to request</string>
     <string name="Accept">Accept</string>
     <string name="Delete">Delete</string>
+    <string name="FriendList">FriendList</string>
+    <string name="Do_you_want_to_unfriend">Do you want to unfriend</string>
+    <string name="no_request_found">NO REQUEST FOUND</string>
+    <string name="no_contacts_found">NO CONTACTS FOUND</string>
+    <string name="title_activity_chat">ChatActivity</string>
 
 </resources>

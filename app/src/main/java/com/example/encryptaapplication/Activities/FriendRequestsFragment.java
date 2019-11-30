@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.encryptaapplication.Adapters.UserFoundAdapter;
@@ -43,6 +44,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -60,14 +62,18 @@ public class FriendRequestsFragment extends Fragment {
     FirebaseRecyclerAdapter<usermodel, reqholder> firebaseRecyclerAdapter;
     private AlertDialog dialog;
     ProgressBar loadingbar;
+    TextView nodatatext;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_friend_requests, container, false);
+
         mRecyclerview = (RecyclerView)view.findViewById(R.id.fr_recyclerview);
         loadingbar = view.findViewById(R.id.req_progress);
+        nodatatext = view.findViewById(R.id.nodatatext);
+
         FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
         storageReference =FirebaseStorage.getInstance().getReference().child("profile_pic");
         uid = current_user.getUid();
@@ -80,14 +86,46 @@ public class FriendRequestsFragment extends Fragment {
     }
 
     private void getReq_2() {
+        myDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.exists()){
+
+                    nodatatext.setVisibility(VISIBLE);
+                    loadingbar.setVisibility(GONE);
+                }else {
+                    nodatatext.setVisibility(GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
         FirebaseRecyclerOptions<usermodel> options =
                 new FirebaseRecyclerOptions.Builder<usermodel>()
                         .setQuery(myDatabase, usermodel.class)
                         .build();
 
-        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<usermodel, reqholder>(options
 
-        ) {
+
+
+
+        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<usermodel, reqholder>(options) {
+
+
+            @Override
+            public void onError(@NonNull DatabaseError error) {
+                Log.d("ERROR",error.getMessage().toString());
+                super.onError(error);
+            }
+
             @Override
             protected void onBindViewHolder(@NonNull final reqholder holder, final int position, @NonNull usermodel model) {
                 Log.d("TAG","tagtatgatata");
@@ -199,11 +237,46 @@ public class FriendRequestsFragment extends Fragment {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.acceptordelete,null,false);
         final EditText newname = view.findViewById(R.id.changename_edittext);
         Button accept = view.findViewById(R.id.accept_button);
-        Button delete = view.findViewById(R.id.delete_button);
+        final Button delete = view.findViewById(R.id.delete_button);
         dialog.setCanceledOnTouchOutside(false);
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //Two steps (first)
+                myDatabase = FirebaseDatabase.getInstance().getReference().child(getContext().getString(R.string.FriendList));
+
+                DatabaseReference d = myDatabase.child(uid).child(friendkey);
+                HashMap<String, String> userMap = new HashMap<>();
+                userMap.put("Status","Friends");
+
+
+                d.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+
+                        DatabaseReference d2 = myDatabase.child(friendkey).child(uid);
+                        HashMap<String, String> userMap2 = new HashMap<>();
+                        userMap2.put("Status","Friends");
+
+                        d2.setValue(userMap2).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful())
+                                {
+                                    DeleteReq(friendkey);
+
+                                }
+                            }
+                        });
+
+
+
+                    }
+                });
+
+
 
 
             }
@@ -212,22 +285,28 @@ public class FriendRequestsFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                myDatabase = FirebaseDatabase.getInstance().getReference().child("FriendRequest");
-                myDatabase.child(uid).child(friendkey).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        firebaseRecyclerAdapter.notifyDataSetChanged();
-                        dialog.dismiss();
-
-                    }
-                });
-
-
+                DeleteReq(friendkey);
+                firebaseRecyclerAdapter.notifyDataSetChanged();
             }
         });
 
         dialog.setView(view);
         dialog.show();
+
+    }
+
+    void DeleteReq(String friendkey){
+        myDatabase = FirebaseDatabase.getInstance().getReference().child("FriendRequest");
+        myDatabase.child(uid).child(friendkey).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                firebaseRecyclerAdapter.notifyDataSetChanged();
+                dialog.dismiss();
+
+
+            }
+        });
+
 
     }
 

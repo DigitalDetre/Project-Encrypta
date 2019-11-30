@@ -1,12 +1,16 @@
 package com.example.encryptaapplication.Adapters;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -45,6 +49,9 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
     private DatabaseReference myDatabase;
     private String uid;
     private int RequestState=0;
+    private int WorkStatus=0;
+    private AlertDialog dialog;
+    private AlertDialog respond_dialog;
 
     public UserFoundAdapter(Activity activity, ArrayList<usermodel> data){
         this.activity = activity;
@@ -67,6 +74,7 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
 
     @Override
     public void onBindViewHolder(@NonNull final UserHolder holder, final int position) {
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -75,22 +83,45 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
             }
         }).start();
 
-
+        //first condition
         if(uid.contentEquals(Data.get(position).getParentID())){
             holder.SendReq.setVisibility(View.GONE);
             holder.request_text.setVisibility(View.GONE);
         }
-        else{
-            // Check if user already sent the request
-            myDatabase = FirebaseDatabase.getInstance().getReference().child("FriendRequest").child(Data.get(position).getParentID());
+        else {
+
+            // if we are already friends
+            myDatabase = FirebaseDatabase.getInstance().getReference().child("FriendList").child(uid).child(Data.get(position).getParentID());
             myDatabase.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.hasChild(uid)){
-                        holder.SendReq.setImageResource(R.drawable.ic_add_usergrey);
-                        holder.request_text.setText("Cancel");
-                        RequestState = 1;
+                    if(dataSnapshot.exists()){
+                        holder.SendReq.setImageResource(R.drawable.ic_friends_grey);
+                        holder.request_text.setText("Unfriend");
+                        WorkStatus = 1;
 
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+
+            });
+
+            // if he already sent me the request
+
+
+            myDatabase = FirebaseDatabase.getInstance().getReference().child("FriendRequest").child(uid);
+            myDatabase.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.hasChild(Data.get(position).getParentID())){
+                        holder.SendReq.setImageResource(R.drawable.ic_friends);
+                        holder.request_text.setText("Requested");
+                        WorkStatus = 2;
                     }
 
                 }
@@ -101,6 +132,27 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
                 }
             });
 
+
+
+            // Check if i already sent the request
+            myDatabase = FirebaseDatabase.getInstance().getReference().child("FriendRequest").child(Data.get(position).getParentID());
+            myDatabase.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.hasChild(uid)){
+                        holder.SendReq.setImageResource(R.drawable.ic_add_usergrey);
+                        holder.request_text.setText("Cancel");
+                        WorkStatus = 3;
+
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
 
         }
 
@@ -118,8 +170,8 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
 
 
                 if(!uid.contentEquals(Data.get(position).getParentID())){
-
-                    if(RequestState==0) {
+                    //if user is not his friend
+                    if(WorkStatus==0) {
                         myDatabase = FirebaseDatabase.getInstance().getReference().child("FriendRequest").child(Data.get(position).getParentID()).child(uid);
                         HashMap<String, String> request = new HashMap<>();
                         request.put("RequestType", "GET");
@@ -135,7 +187,22 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
                                 }
                             }
                         });
-                    }else {
+                    }
+                    //if user is his friend
+                    else if(WorkStatus==1){
+
+                        Dialog(Data.get(position).getParentID(),holder);
+
+                    }
+                    //if user already sent him request
+                    else if(WorkStatus==2){
+
+                        respond(Data.get(position).getParentID());
+
+                    }
+
+
+                    else if(WorkStatus==3){
 
                         myDatabase = FirebaseDatabase.getInstance().getReference().child("FriendRequest");
                         myDatabase.child(Data.get(position).getParentID()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -143,7 +210,7 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
                             public void onComplete(@NonNull Task<Void> task) {
                                 holder.SendReq.setImageResource(R.drawable.ic_add_userblue);
                                 holder.request_text.setText("Send Request");
-                                RequestState=0;
+                                WorkStatus=0;
 
                             }
                         });
@@ -204,5 +271,158 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
         });
     }
 
+
+    // UNFRIEND DIALOG START
+    private void Dialog(final String friendkey, final UserHolder holder){
+        if(dialog!=null) {
+            if (dialog.isShowing()) {
+
+                dialog.dismiss();
+            }
+        }
+        dialog = new AlertDialog.Builder(activity).create();
+        View view = LayoutInflater.from(activity).inflate(R.layout.unfriend_dialog,null,false);
+
+        Button confirm = view.findViewById(R.id.cnt_confirm_button);
+        Button cancel = view.findViewById(R.id.cnt_cancel_button);
+        dialog.setCanceledOnTouchOutside(false);
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UnFriend(friendkey,holder);
+                dialog.dismiss();
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.setView(view);
+
+        dialog.show();
+    }
+
+    void UnFriend(String friendkey, final UserHolder holder){
+
+        myDatabase = FirebaseDatabase.getInstance().getReference().child(activity.getString(R.string.FriendList));
+
+        DatabaseReference d = myDatabase.child(uid).child(friendkey);
+
+        final String  frndkey = friendkey;
+        d.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+
+                DatabaseReference d2 = myDatabase.child(frndkey).child(uid);
+                d2.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful())
+                        {
+                            Toast.makeText(activity,"Unfriend Succesfully",Toast.LENGTH_SHORT).show();
+                            notifyDataSetChanged();
+                            holder.SendReq.setImageResource(R.drawable.ic_add_userblue);
+                            holder.request_text.setText("Send Request");
+                            WorkStatus=0;
+
+                        }
+                    }
+                });
+
+
+
+            }
+        });
+
+
+    }
+
+//UNFRIED DIALOG END
+
+
+
+    private void respond(final String friendkey){
+        if( respond_dialog!=null) {
+            if (respond_dialog.isShowing()) {
+
+                respond_dialog.dismiss();
+            }
+        }
+        respond_dialog = new AlertDialog.Builder(activity).create();
+        View view = LayoutInflater.from(activity).inflate(R.layout.acceptordelete,null,false);
+        Button accept = view.findViewById(R.id.accept_button);
+        final Button delete = view.findViewById(R.id.delete_button);
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //Two steps (first)
+                myDatabase = FirebaseDatabase.getInstance().getReference().child(activity.getString(R.string.FriendList));
+
+                DatabaseReference d = myDatabase.child(uid).child(friendkey);
+                HashMap<String, String> userMap = new HashMap<>();
+                userMap.put("Status","Friends");
+
+
+                d.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+
+                        DatabaseReference d2 = myDatabase.child(friendkey).child(uid);
+                        HashMap<String, String> userMap2 = new HashMap<>();
+                        userMap2.put("Status","Friends");
+
+                        d2.setValue(userMap2).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful())
+                                {
+                                    DeleteReq(friendkey);
+                                    notifyDataSetChanged();
+                                }
+                            }
+                        });
+
+
+
+                    }
+                });
+
+
+
+
+            }
+        });
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                DeleteReq(friendkey);
+                notifyDataSetChanged();
+            }
+        });
+
+        respond_dialog.setView(view);
+        respond_dialog.show();
+
+    }
+
+    void DeleteReq(String friendkey){
+        myDatabase = FirebaseDatabase.getInstance().getReference().child("FriendRequest");
+        myDatabase.child(uid).child(friendkey).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+                respond_dialog.dismiss();
+                notifyDataSetChanged();
+            }
+        });
+
+    }
 
 }
