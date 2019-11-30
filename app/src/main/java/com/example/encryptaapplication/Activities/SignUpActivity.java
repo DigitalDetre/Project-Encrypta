@@ -2,22 +2,20 @@
 
 package com.example.encryptaapplication.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.encryptaapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,9 +31,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.NotNull;
+import com.google.firebase.functions.FirebaseFunctions;
 import com.virgilsecurity.android.common.callback.OnGetTokenCallback;
 import com.virgilsecurity.android.ethree.interaction.EThree;
-import com.virgilsecurity.common.callback.*;
+import com.virgilsecurity.common.callback.OnResultListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,6 +48,36 @@ public class SignUpActivity extends AppCompatActivity {
     private ProgressDialog mSignupProgress;
     private DatabaseReference myDatabase;
     private boolean userexists=false;
+    // Fetch Virgil JWT token from Firebase function
+    OnGetTokenCallback tokenCallback = new OnGetTokenCallback() {
+
+        @NotNull
+        @Override public String onGetToken() {
+            Map<String, String> data =
+                    (Map<String, String>) FirebaseFunctions.getInstance()
+                            .getHttpsCallable("getVirgilJwt")
+                            .call()
+                            .getResult()
+                            .getData();
+
+            return data.get("token");
+        }
+    };
+
+    OnResultListener<EThree> initializeListener = new OnResultListener<EThree>() {
+
+        @Override public void onSuccess(EThree result) {
+            // Init done!
+            // Save the eThree instance
+        }
+
+        @Override public void onError(@NotNull Throwable throwable) {
+            // Error handling
+        }
+    };
+
+    // Initialize EThree SDK with JWT token from Firebase Function
+    EThree.initialize(context, tokenCallback).addCallback(initializeListener);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
