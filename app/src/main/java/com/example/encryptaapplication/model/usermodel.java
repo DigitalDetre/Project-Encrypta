@@ -1,16 +1,23 @@
 package com.example.encryptaapplication.model;
 
 public class usermodel {
-    String Name;
-    String Username;
-    String Profile;
-    String Email;
+    private String Name;
+    private String Username;
+    private String Profile;
+    private String Email;
+    private String ParentID;
 
-    public usermodel(String name, String username, String profile, String email) {
+    public String getParentID() {
+        return ParentID;
+    }
+
+    public usermodel(){}
+    public usermodel(String name, String username, String profile, String email, String ParentID) {
         Name = name;
         Username = username;
         Profile = profile;
         Email = email;
+        this.ParentID=ParentID;
     }
 
     public String getName() {

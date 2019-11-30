@@ -8,7 +8,7 @@
     android:layout_marginTop="3dp"
     >
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/found_imageview"
+        android:id="@+id/req_imageview"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:src="@mipmap/default_icon"
@@ -24,7 +24,7 @@
         android:layout_weight="2.5"
         >
         <TextView
-            android:id="@+id/found_nametextview"
+            android:id="@+id/req_nametextview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:textAlignment="textStart"
@@ -37,7 +37,7 @@
             tools:ignore="RtlCompat" />
 
         <TextView
-            android:id="@+id/username_textview"
+            android:id="@+id/req_username_textview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:textAlignment="textStart"
@@ -54,20 +54,20 @@
         android:layout_weight="1"
         android:weightSum="3">
         <ImageButton
-            android:id="@+id/send_req_button"
+            android:id="@+id/req_button"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:src="@drawable/ic_add_userblue"
+            android:src="@drawable/ic_friends"
             android:background="@color/white"
             />
         <TextView
-            android:id="@+id/request_text"
+            android:id="@+id/req_text"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:textAlignment="center"
-            android:text="Send request"
+            android:text="requested"
             />
     </LinearLayout>
 
