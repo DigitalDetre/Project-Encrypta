@@ -6,9 +6,10 @@
     android:weightSum="5"
     android:background="@color/white"
     android:layout_marginTop="3dp"
+    android:layout_marginBottom="5dp"
     >
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/found_imageview"
+        android:id="@+id/cnt_imageview"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:src="@mipmap/default_icon"
@@ -17,6 +18,7 @@
         android:padding="5dp"
         />
     <LinearLayout
+        android:id="@+id/mainclick_layout"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -24,7 +26,7 @@
         android:layout_weight="2.5"
         >
         <TextView
-            android:id="@+id/found_nametextview"
+            android:id="@+id/cnt_nametextview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:textAlignment="textStart"
@@ -37,7 +39,7 @@
             tools:ignore="RtlCompat" />
 
         <TextView
-            android:id="@+id/username_textview"
+            android:id="@+id/cnt_username_textview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:textAlignment="textStart"
@@ -54,20 +56,20 @@
         android:layout_weight="1"
         android:weightSum="3">
         <ImageButton
-            android:id="@+id/send_req_button"
+            android:id="@+id/cnt_unfriend_button"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:src="@drawable/ic_add_userblue"
+            android:src="@drawable/ic_friends_grey"
             android:background="@color/white"
             />
         <TextView
-            android:id="@+id/request_text"
+            android:id="@+id/cnt_text"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:textAlignment="center"
-            android:text="Send request"
+            android:text="unfriend"
             />
     </LinearLayout>
 

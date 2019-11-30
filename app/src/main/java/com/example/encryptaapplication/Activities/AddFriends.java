@@ -69,13 +69,17 @@ public class AddFriends extends Activity {
                                 String email ="";
                                 String username ="";
                                 String profile_image ="";
+                                String ParentID="";
                                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren())
                                 {
                                     Iterable<DataSnapshot> child =   postSnapshot.getChildren();
 
+                                    ParentID = postSnapshot.getKey();
 
                                     while (child.iterator().hasNext()){
                                         DataSnapshot dasta =child.iterator().next();
+
+
                                         if(dasta.getKey().contentEquals("email")){
                                             data=dasta.getValue().toString();
                                             Log.d("DATA email",data);
@@ -101,13 +105,14 @@ public class AddFriends extends Activity {
                                     }
                                 }
 
-                                founduser.add(new usermodel(name,username,profile_image,email));
+                                founduser.add(new usermodel(name,username,profile_image,email,ParentID));
                                 SetupRecyclerView();
                                 if(dialog!=null&dialog.isShowing()){ dialog.dismiss(); }
 
                             }else{
                                 if(dialog!=null&dialog.isShowing()){ dialog.dismiss(); }
                                 Toast.makeText(AddFriends.this, "No UserFound", Toast.LENGTH_SHORT).show();
+
                             }
                         }
 

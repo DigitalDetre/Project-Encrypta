@@ -5,10 +5,25 @@
     android:layout_height="match_parent"
     tools:context=".Activities.FriendRequestsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fr_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/friend_requests_page" />
+        android:layout_height="match_parent"/>
+    <ProgressBar
+        android:id="@+id/req_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        />
+    <TextView
+        android:id="@+id/nodatatext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no_request_found"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:textSize="19dp"
+        android:visibility="gone"
+        />
 
 </FrameLayout>

@@ -4,11 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.ContactsFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cnt_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/contacts_page" />
+        android:layout_height="match_parent"/>
+    <ProgressBar
+        android:id="@+id/cnt_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        />
+    <TextView
+        android:id="@+id/nodatatext_cnt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no_contacts_found"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:textSize="19dp"
+        android:visibility="gone"
+        />
 
 </FrameLayout>

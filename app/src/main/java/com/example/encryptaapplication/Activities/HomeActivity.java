@@ -3,9 +3,6 @@ package com.example.encryptaapplication.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
@@ -28,6 +25,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_home);
         mAuth = FirebaseAuth.getInstance();
         mToolBar = (Toolbar) findViewById(R.id.home_page_toolbar);
@@ -41,9 +39,9 @@ public class HomeActivity extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mTabLayout = (TabLayout) findViewById(R.id.home_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
-
-
     }
+
+
     // Checks if the user is already logged in if not go back to the main page
     @Override
     public void onStart() {
@@ -62,8 +60,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.home_menu,menu);
-
+        getMenuInflater().inflate(R.menu.home_menu, menu);
         return true;
     }
 
@@ -87,11 +84,13 @@ public class HomeActivity extends AppCompatActivity {
         }
         if(item.getItemId()==R.id.home_all){
 
-            Intent addafriend = new Intent(HomeActivity.this,AddFriends.class);
+            Intent addafriend = new Intent(HomeActivity.this, AddFriends.class);
             startActivity(addafriend);
         }
 
         return true;
     }
+
+
 
 }
