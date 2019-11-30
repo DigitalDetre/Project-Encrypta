@@ -43,7 +43,7 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private ProgressDialog mSignupProgress;
     private DatabaseReference myDatabase;
-    private boolean userexists = false;
+    private boolean userexists=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,13 +109,15 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
                             userexists=true;
-                            Toast.makeText(SignUpActivity.this,"Username in use",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignUpActivity.this,"USername exist",Toast.LENGTH_SHORT).show();
                             edittextUsername.setTextColor(Color.RED);
 
 
-                        } else {
+                        }else{
                             userexists = false;
                             edittextUsername.setTextColor(Color.GREEN);
+
+
                         }
                     }
 
@@ -145,7 +147,7 @@ public class SignUpActivity extends AppCompatActivity {
                     final String password = editTextPassword.getText().toString();
 
                     if (isValidEmail(email) && isValidPassword()) {
-                        mSignupProgress.setTitle("Creating account");
+                        mSignupProgress.setTitle("Creating a new Account");
                         mSignupProgress.setMessage("Please wait a few second ...");
                         mSignupProgress.setCanceledOnTouchOutside(false);
                         mSignupProgress.show();
@@ -156,70 +158,69 @@ public class SignUpActivity extends AppCompatActivity {
 
 
                                 if (task.isSuccessful()) {
-
-                                    //extra code
-                                    FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
-                                    String id = current_user.getUid();
-                                    myDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(id);
-
-                                    HashMap<String, String> userMap = new HashMap<>();
-                                    userMap.put("email", email);
-                                    userMap.put("name", "Display Name");
-                                    userMap.put("username", edittextUsername.getText().toString().toLowerCase());
-                                    userMap.put("image", "default");
-                                    userMap.put("thumb_image", "default");
-
-
-                                    myDatabase.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                mSignupProgress.dismiss();
-                                                Toast.makeText(SignUpActivity.this, "Email verification sent", Toast.LENGTH_SHORT).show();
-                                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                                startActivity(intent);
-                                                finish();
-                                            }
-                                        }
-                                    });
+//
+//                                //extra code by developer sampat sharma
+//                                FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
+//                                String uid = current_user.getUid();
+//                                myDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+//
+//                                HashMap<String, String> userMap = new HashMap<>();
+//                                userMap.put("email", email);
+//                                userMap.put("name", "Display Name");
+//                                userMap.put("username", edittextUsername.getText().toString().toLowerCase());
+//                                userMap.put("image", "default");
+//                                userMap.put("thumb_image", "default");
+//
+//
+//                                myDatabase.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                    @Override
+//                                    public void onComplete(@NonNull Task<Void> task) {
+//                                        if (task.isSuccessful()) {
+//                                            mSignupProgress.dismiss();
+//                                            Toast.makeText(SignUpActivity.this, "Email verification sent", Toast.LENGTH_SHORT).show();
+//                                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+//                                            startActivity(intent);
+//                                            finish();
+//                                        }
+//                                    }
+//                                });
 
 
                                     //end extra code
 
 
-//                                mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                    @Override
-//                                    public void onComplete(@NonNull Task<Void> task) {
-//                                        if (task.isSuccessful()) {
-//                                           FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
-//                                           String uid = current_user.getUid();
-//                                           myDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
-//
-//                                            HashMap<String, String> userMap = new HashMap<>();
-//                                            userMap.put("name", "Display Name");
-//                                            userMap.put("image","default");
-//                                            userMap.put("thumb_image","default");
-//
-//
-//                                            myDatabase.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                                @Override
-//                                                public void onComplete(@NonNull Task<Void> task) {
-//                                                    if(task.isSuccessful()) {
-//                                                        mSignupProgress.dismiss();
-//                                                        Toast.makeText(SignUpActivity.this, "Email verification sent", Toast.LENGTH_SHORT).show();
-//                                                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-//                                                        startActivity(intent);
-//                                                        finish();
-//                                                    }
-//                                                }
-//                                            });
-//
-//                                        } else {
-//                                            mSignupProgress.hide();
-//                                            Toast.makeText(SignUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-//                                        }
-//                                    }
-//                                });
+                                    mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
+                                                String uid = current_user.getUid();
+                                                myDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+                                                HashMap<String, String> userMap = new HashMap<>();
+                                                userMap.put("email", email);
+                                                userMap.put("name", "Display Name");
+                                                userMap.put("username", edittextUsername.getText().toString().toLowerCase());
+                                                userMap.put("image", "default");
+                                                userMap.put("thumb_image", "default");
+                                                myDatabase.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if(task.isSuccessful()) {
+                                                            mSignupProgress.dismiss();
+                                                            Toast.makeText(SignUpActivity.this, "Email verification sent", Toast.LENGTH_SHORT).show();
+                                                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                                            startActivity(intent);
+                                                            finish();
+                                                        }
+                                                    }
+                                                });
+
+                                            } else {
+                                                mSignupProgress.hide();
+                                                Toast.makeText(SignUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+                                    });
 
                                 } else {
                                     Toast.makeText(SignUpActivity.this, "Account already exists", Toast.LENGTH_SHORT).show();
@@ -262,7 +263,7 @@ public class SignUpActivity extends AppCompatActivity {
 
 
         if(password.equals(password2)){
-            if(password.length() >= 8 && password.length() <= 16){
+            if(password.length() >= 8 && password.length() <=16){
                 return true;
             }else {
                 Toast.makeText(SignUpActivity.this,"Your password must be between 8 and 16 characters",Toast.LENGTH_SHORT).show();

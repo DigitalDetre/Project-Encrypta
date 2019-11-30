@@ -304,6 +304,7 @@ public class FriendRequestsFragment extends Fragment {
                 dialog.dismiss();
 
 
+
             }
         });
 

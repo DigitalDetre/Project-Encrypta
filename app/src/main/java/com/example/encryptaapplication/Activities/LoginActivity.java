@@ -165,7 +165,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         //remove not verified after test
-                        if (!mAuth.getCurrentUser().isEmailVerified()||mAuth.getCurrentUser().isEmailVerified()) {
+                        if (mAuth.getCurrentUser().isEmailVerified()) {
                             Toast.makeText(LoginActivity.this, "Signing in...", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                             startActivity(intent);
@@ -235,7 +235,6 @@ public class LoginActivity extends AppCompatActivity {
         }else {
             Toast.makeText(LoginActivity.this,"Your password must be between 8 and 16 characters",Toast.LENGTH_SHORT).show();
             return false;
-
         }
     }
 
