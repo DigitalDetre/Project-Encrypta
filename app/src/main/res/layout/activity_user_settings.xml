@@ -57,32 +57,24 @@
 
     <TextView
         android:id="@+id/display_username"
-        android:layout_width="127dp"
-        android:layout_height="30dp"
-        android:layout_above="@+id/btn_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_name"
         android:layout_below="@+id/display_name"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="152dp"
-        android:layout_marginLeft="152dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="131dp"
-        android:layout_marginRight="131dp"
-        android:layout_marginBottom="179dp"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="147dp"
+        android:layout_marginLeft="147dp"
+        android:layout_marginTop="110dp"
+        android:layout_marginEnd="136dp"
+        android:layout_marginRight="136dp"
+        android:layout_marginBottom="79dp"
         android:text="@string/username"
+        android:textAlignment="center"
         android:textSize="20sp" />
-
-    <Button
-        android:id="@+id/btn_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="225dp"
-        android:text="@string/set_delete_policy" />
 
     <Button
         android:id="@+id/btn_name"
