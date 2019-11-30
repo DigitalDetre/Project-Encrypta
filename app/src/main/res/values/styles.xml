@@ -1,66 +1,12 @@
 <resources>
-    <string name="app_name">Encrypta</string>
-    <string name="encrypta">Encrypta</string>
-    <string name="password">Password</string>
-    <string name="username">Username</string>
-    <string name="textview">TextView</string>
-    <string name="Enter_username">Enter Username</string>
-    <string name="enter_password">Enter Password</string>
-    <string name="create_an_account">Create an account</string>
-    <string name="button">Button</string>
-    <string name="log_in">Log in</string>
-    <string name="create_account">Create account</string>
-    <string name="have_an_account">Have an account?</string>
-    <string name="create_account_text">Create an Account</string>
-    <string name="name_hint">Username</string>
-    <string name="email_hint">Email\\Username</string>
-    <string name="username_hint">Username</string>
-    <string name="password_hint">Password</string>
-    <string name="re_enter_password_hint">Re-enter Password</string>
-    <string name="register_hint">Register</string>
-    <string name="sign_in">Sign in</string>
-    <string name="forgot_password">Forgot password?</string>
-    <string name="sign_in_text">Sign in</string>
-    <string name="cancel">Cancel</string>
-    <string name="sign_me_in">Sign me in</string>
-    <string name="Submit">Submit</string>
-    <string name="email_verification_sent">Email verification sent</string>
-    <string name="verification_code">Verification code</string>
-    <string name="reset_password">Reset Password</string>
-    <string name="Continue">Continue</string>
-    <string name="find_your_encrypta_account">Find your Encrypta account</string>
-    <string name="title_activity_tabs">TabsActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="title_activity_home">HomeActivity</string>
-    <string name="log_out">Log out</string>
-    <string name="find_friends">Find Friends</string>
-    <string name="account_settings">account_settings</string>
-    <string name="account_setting">Account Settings</string>
+    <!-- Base application theme. -->
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="friend_requests_page">friend_request_page</string>
-    <string name="contacts_page">contacts_page</string>
-    <string name="chat_page">chat_page</string>
-    <string name="name">Name</string>
-    <string name="Set_Delete_policy">Set_Delete_policy</string>
-    <string name="change_name">Change Name</string>
-    <string name="change_status">Change Status</string>
-    <string name="status">Status</string>
-    <string name="set_delete_policy">Set Delete policy</string>
-    <string name="change_profile_picture">Change Profile Picture</string>
-    <string name="update_name">Update name</string>
-    <string name="new_name">new name</string>
-    <string name="confirm">confirm</string>
-    <string name="add_friends">Add a friend</string>
-    <string name="search_friends">search friends</string>
-    <string name="Response">Respond to request</string>
-    <string name="Accept">Accept</string>
-    <string name="Delete">Delete</string>
-    <string name="FriendList">FriendList</string>
-    <string name="Do_you_want_to_unfriend">Do you want to unfriend</string>
-    <string name="no_request_found">NO REQUEST FOUND</string>
-    <string name="no_contacts_found">NO CONTACTS FOUND</string>
-    <string name="title_activity_chat">ChatActivity</string>
+    <style name="AppTheme"
+        parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
 
 </resources>
