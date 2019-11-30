@@ -48,36 +48,6 @@ public class SignUpActivity extends AppCompatActivity {
     private ProgressDialog mSignupProgress;
     private DatabaseReference myDatabase;
     private boolean userexists=false;
-    // Fetch Virgil JWT token from Firebase function
-    OnGetTokenCallback tokenCallback = new OnGetTokenCallback() {
-
-        @NotNull
-        @Override public String onGetToken() {
-            Map<String, String> data =
-                    (Map<String, String>) FirebaseFunctions.getInstance()
-                            .getHttpsCallable("getVirgilJwt")
-                            .call()
-                            .getResult()
-                            .getData();
-
-            return data.get("token");
-        }
-    };
-
-    OnResultListener<EThree> initializeListener = new OnResultListener<EThree>() {
-
-        @Override public void onSuccess(EThree result) {
-            // Init done!
-            // Save the eThree instance
-        }
-
-        @Override public void onError(@NotNull Throwable throwable) {
-            // Error handling
-        }
-    };
-
-    // Initialize EThree SDK with JWT token from Firebase Function
-    EThree.initialize(context, tokenCallback).addCallback(initializeListener);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
