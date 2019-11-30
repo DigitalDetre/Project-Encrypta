@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.example.encryptaapplication.Adapters.MessageAdapter;
 import com.example.encryptaapplication.Entities.Chat;
 import com.example.encryptaapplication.Entities.User;
+import com.example.encryptaapplication.Notifications.Sender;
 import com.example.encryptaapplication.R;
 import com.google.android.gms.common.api.Api;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,10 +32,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MessageActivity extends AppCompatActivity {
 
