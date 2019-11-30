@@ -159,7 +159,6 @@ public class SignUpActivity extends AppCompatActivity {
 
                                 if (task.isSuccessful()) {
 
-
                                     mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
