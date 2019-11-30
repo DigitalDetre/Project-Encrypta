@@ -148,7 +148,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                     if (isValidEmail(email) && isValidPassword()) {
                         mSignupProgress.setTitle("Creating a new Account");
-                        mSignupProgress.setMessage("Please wait a few second ...");
+                        mSignupProgress.setMessage("This may take a few seconds ...");
                         mSignupProgress.setCanceledOnTouchOutside(false);
                         mSignupProgress.show();
 
