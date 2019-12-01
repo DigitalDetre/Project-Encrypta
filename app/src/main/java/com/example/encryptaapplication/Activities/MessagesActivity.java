@@ -21,7 +21,7 @@ public class MessagesActivity extends AppCompatActivity{
         setContentView(R.layout.activity_messages);
 
         window_text = findViewById(R.id.window_text);
-//        policy_text = findViewById(R.id.policy_text);
+        policy_text = findViewById(R.id.policy_text);
         spinner = findViewById(R.id.spinner);
         change_btn = findViewById(R.id.change_btn);
     }
