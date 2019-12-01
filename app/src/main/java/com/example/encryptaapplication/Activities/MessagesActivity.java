@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 
 public class MessagesActivity extends AppCompatActivity{
 
@@ -32,6 +34,7 @@ public class MessagesActivity extends AppCompatActivity{
     CharSequence prompt;
     DatabaseReference databaseReference;
     FirebaseUser current_user;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,8 @@ public class MessagesActivity extends AppCompatActivity{
         setContentView(R.layout.activity_messages);
         current_user = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(current_user.getUid()).child("deletion_policy");
+        mAuth = FirebaseAuth.getInstance();
+
         window_text = findViewById(R.id.window_text);
         policy_text = findViewById(R.id.policy_text);
         spinner = findViewById(R.id.spinner);
@@ -52,26 +57,37 @@ public class MessagesActivity extends AppCompatActivity{
                 final String spinnerItem;
                 spinnerItem = spinner.getSelectedItem().toString().trim();
 
+                if (databaseReference != null) {
+                    databaseReference.setValue(spinnerItem).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(current_user.getUid()).child("deletion_policy");
+                            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    ref.setValue(spinnerItem);
+                                    Toast.makeText(MessagesActivity.this, "Deletion policy changed to " + spinnerItem, Toast.LENGTH_LONG).show();
+                                }
 
-                databaseReference.setValue(spinnerItem).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(current_user.getUid()).child("deletion_policy");
-                        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                ref.setValue(spinnerItem);
-                                Toast.makeText(MessagesActivity.this, "Deletion policy changed to " + spinnerItem, Toast.LENGTH_LONG).show();
-                            }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                }
+                            });
 
-                            }
-                        });
-
-                    }
-                });
+                        }
+                    });
+                } else {
+                    // if the user doesnt have a deletion policy for some reason (older accounts) add it in the database
+                    HashMap<String, String> userMap = new HashMap<>();
+                    userMap.put("deletion_policy", "Never");
+                    databaseReference.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toast.makeText(MessagesActivity.this, "Deletion policy changed to " + spinnerItem, Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
 
             }
         });
