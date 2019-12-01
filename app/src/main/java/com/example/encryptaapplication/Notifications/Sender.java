@@ -1,5 +1,7 @@
 package com.example.encryptaapplication.Notifications;
 
+import androidx.work.Data;
+
 public class Sender {
     public Data data;
     public String to;
