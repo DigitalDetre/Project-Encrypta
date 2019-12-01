@@ -4,12 +4,12 @@
 
     <!-- View background color -->
     <solid
-        android:color="#8b8989" >
+        android:color="#A3EC8A" >
     </solid>
 
     <!-- The radius makes the corners rounded -->
     <corners
-        android:radius="20dp">
+        android:radius="8dp">
     </corners>
 
 
