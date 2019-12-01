@@ -172,6 +172,7 @@ public class SignUpActivity extends AppCompatActivity {
                                                 userMap.put("username", edittextUsername.getText().toString().toLowerCase());
                                                 userMap.put("image", "default");
                                                 userMap.put("thumb_image", "default");
+                                                userMap.put("deletion_policy", "Never");
                                                 myDatabase.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {

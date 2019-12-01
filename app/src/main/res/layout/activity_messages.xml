@@ -28,9 +28,9 @@
         android:layout_alignLeft="@+id/window_text"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/window_text"
-        android:layout_marginLeft="12dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="63dp"
+        android:layout_marginTop="65dp"
         android:text="Message delete policy"
         android:textColor="@color/white"
         android:textSize="17dp" />

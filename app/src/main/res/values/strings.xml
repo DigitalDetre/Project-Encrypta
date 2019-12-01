@@ -1,5 +1,6 @@
 <resources>
     <string-array name="times">
+        <item>"Never"</item>
         <item>"Instant"</item>
         <item>"5 min"</item>
         <item>"24 hours"</item>
