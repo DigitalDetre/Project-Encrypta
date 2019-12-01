@@ -110,15 +110,15 @@ public class ContactsFragment extends Fragment {
 
         firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<usermodel, cntholder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull cntholder holder, final int position, @NonNull usermodel model) {
+            protected void onBindViewHolder(@NonNull final cntholder holder, final int position, @NonNull usermodel model) {
                 myDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child((getRef(position).getKey()));
                 final cntholder cntholder = holder;
                 myDatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if(dataSnapshot.exists()){
-
                             try {
+
                                 String name = dataSnapshot.child("name").getValue().toString();
                                 String username = dataSnapshot.child("username").getValue().toString();
                                 final String image = dataSnapshot.child("image").getValue().toString();
@@ -163,6 +163,7 @@ public class ContactsFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         Intent ChatActivity = new Intent(getContext(), ChatActivity.class);
+                        ChatActivity.putExtra("friend_id",getRef(position).getKey());
                         getContext().startActivity(ChatActivity);
                     }
                 });

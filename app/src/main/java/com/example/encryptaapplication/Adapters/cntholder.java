@@ -20,6 +20,15 @@ public class cntholder extends RecyclerView.ViewHolder {
     TextView username;
     ImageButton action;
     LinearLayout openchat_layout;
+    String UID;
+
+    public String getUID() {
+        return UID;
+    }
+
+    public void setUID(String UID) {
+        this.UID = UID;
+    }
 
     public LinearLayout getOpenchat_layout() {
         return openchat_layout;

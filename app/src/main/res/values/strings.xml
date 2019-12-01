@@ -63,5 +63,6 @@
     <string name="no_request_found">NO REQUEST FOUND</string>
     <string name="no_contacts_found">NO CONTACTS FOUND</string>
     <string name="title_activity_chat">ChatActivity</string>
+    <string name="write_a_message">Type a message</string>
 
 </resources>
