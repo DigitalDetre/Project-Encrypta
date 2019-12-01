@@ -37,7 +37,6 @@ public class MessagesActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messages);
-        prompt = databaseReference.toString();
         current_user = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(current_user.getUid()).child("deletion_policy");
         window_text = findViewById(R.id.window_text);
