@@ -1,5 +1,6 @@
 package com.example.encryptaapplication.Activities;
 
+import android.media.audiofx.Visualizer;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.encryptaapplication.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +29,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +40,7 @@ public class ChatActivity extends AppCompatActivity {
     ImageView sendButton;
     EditText messageArea;
     ScrollView scrollView;
-    private DatabaseReference reference1,reference2;
+    private DatabaseReference reference1,reference2, deletion_policy;
     String uid,friendid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,15 +66,82 @@ public class ChatActivity extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String messageText = messageArea.getText().toString();
-
+                final String messageText = messageArea.getText().toString();
                 if(!messageText.equals("")){
-                    HashMap<String, String> map = new HashMap<String, String>();
+                    final HashMap<String, String> map = new HashMap<String, String>();
                     map.put("message", messageText);
                     map.put("user", uid);//UserDetails.username);
                     reference1.push().setValue(map);
                     reference2.push().setValue(map);
                     messageArea.setText("");
+
+                    deletion_policy = FirebaseDatabase.getInstance().getReference().child("Users").child(uid).child("deletion_policy");
+
+                    deletion_policy.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            String deletepol = dataSnapshot.getValue(String.class);
+                            int time;
+                            long timecountinMilliseconds;
+
+                            if (deletepol != null) {
+                                if (deletepol.compareTo("Instant") == 0) {
+                                    // prob need to implement a 'read' flag
+                                    time = 5;
+                                    timecountinMilliseconds = time * 1000;
+
+                                    new android.os.Handler().postDelayed(
+                                            new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    reference1.removeValue();
+                                                    reference2.removeValue();
+                                                }
+                                            },
+                                            timecountinMilliseconds);
+
+                                } else if (deletepol.compareTo("5 min") == 0) {
+                                    time = 300;
+                                    timecountinMilliseconds = time * 1000;
+                                    new android.os.Handler().postDelayed(
+                                            new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    reference1.removeValue();
+                                                    reference2.removeValue();
+                                                }
+                                            },
+                                            timecountinMilliseconds
+                                    );
+
+                                } else if (deletepol.compareTo("24 hours") == 0) {
+                                    time = 1440;
+                                    timecountinMilliseconds = time * 1000;
+                                    new android.os.Handler().postDelayed(
+                                            new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    reference1.removeValue();
+                                                    reference2.removeValue();
+                                                }
+                                            },
+                                            timecountinMilliseconds
+                                    );
+
+                                } else {
+                                    // do not delete messages
+                                }
+                            } else {
+                                Toast.makeText(ChatActivity.this, "Err: in deletion policy", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
                 }
             }
         });
@@ -86,7 +156,7 @@ public class ChatActivity extends AppCompatActivity {
                 if(userName.equals(uid)){
                     addMessageBox(message, 1);
                 }
-                else{
+                else {
                     addMessageBox(message, 2);
                 }
             }

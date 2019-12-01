@@ -109,7 +109,7 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
                             userexists=true;
-                            Toast.makeText(SignUpActivity.this,"USername exist",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignUpActivity.this,"Username exist",Toast.LENGTH_SHORT).show();
                             edittextUsername.setTextColor(Color.RED);
 
 
