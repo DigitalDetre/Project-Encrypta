@@ -21,20 +21,17 @@ class SectionsPagerAdapter extends FragmentPagerAdapter {
                 FriendRequestsFragment requestsFragment = new FriendRequestsFragment();
                 return requestsFragment;
             case 1:
-                ChatsFragment chatsFragment = new ChatsFragment();
-                return  chatsFragment;
-            case 2:
                 ContactsFragment contactsFragment = new ContactsFragment();
                 return  contactsFragment;
-             default:
-                 return null;
+            default:
+                return null;
 
         }
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 
     @Nullable
@@ -44,8 +41,6 @@ class SectionsPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return "Friend Requests";
             case 1:
-                return  "Messages";
-            case 2:
                 return  "Contacts";
             default:
                 return null;
