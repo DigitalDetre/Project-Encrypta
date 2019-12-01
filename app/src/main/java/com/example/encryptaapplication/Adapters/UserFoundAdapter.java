@@ -3,7 +3,6 @@ package com.example.encryptaapplication.Adapters;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -20,7 +19,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.encryptaapplication.Activities.ChatActivity;
 import com.example.encryptaapplication.Activities.UserSettingsActivity;
 import com.example.encryptaapplication.R;
 import com.example.encryptaapplication.model.usermodel;
@@ -50,7 +48,6 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
     StorageReference storageReference;
     private DatabaseReference myDatabase;
     private String uid;
-    private String displayName;
     private int RequestState=0;
     private int WorkStatus=0;
     private AlertDialog dialog;
@@ -63,7 +60,6 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
         storageReference = mStorageRef.child("profile_pic");
         FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
         uid = current_user.getUid();
-        displayName = current_user.getDisplayName();
     }
 
 
@@ -71,6 +67,8 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
     @Override
     public UserHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(activity.getBaseContext()).inflate(R.layout.find_friend_row,parent,false);
+
+
         return new UserHolder(view);
     }
 
@@ -224,15 +222,6 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
                     Toast.makeText(activity,"CODE TO OPEN OWN PROFIle",Toast.LENGTH_SHORT).show();
                     //Show His OWN PROFILE
                 }
-            }
-        });
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(activity, ChatActivity.class);
-                intent.putExtra("uid", uid);
-                activity.startActivity(intent);
             }
         });
 
