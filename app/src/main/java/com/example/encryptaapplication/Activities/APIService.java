@@ -1,5 +1,6 @@
 package com.example.encryptaapplication.Activities;
 
+import com.example.encryptaapplication.Notifications.MyResponse;
 import com.example.encryptaapplication.Notifications.Sender;
 
 import retrofit2.Call;
