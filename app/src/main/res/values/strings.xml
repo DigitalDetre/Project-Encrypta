@@ -1,4 +1,10 @@
 <resources>
+    <string-array name="times">
+        <item>"Instant"</item>
+        <item>"5 min"</item>
+        <item>"24 hours"</item>
+    </string-array>
+
     <string name="app_name">Encrypta</string>
     <string name="encrypta">Encrypta</string>
     <string name="password">Password</string>
@@ -66,5 +72,6 @@
     <string name="write_a_message">Type a message</string>
     <string name="message_delete_policy">Message Delete Policy</string>
     <string name="save">Save</string>
+
 
 </resources>
