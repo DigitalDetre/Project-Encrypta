@@ -64,5 +64,7 @@
     <string name="no_contacts_found">NO CONTACTS FOUND</string>
     <string name="title_activity_chat">ChatActivity</string>
     <string name="write_a_message">Type a message</string>
+    <string name="message_delete_policy">Message Delete Policy</string>
+    <string name="save">Save</string>
 
 </resources>

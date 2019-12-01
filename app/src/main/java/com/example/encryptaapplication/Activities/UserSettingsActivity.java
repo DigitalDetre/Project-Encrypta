@@ -48,14 +48,14 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserSettingsActivity extends AppCompatActivity {
+
     private DatabaseReference mUserDatabase;
     private FirebaseUser mCurrentUser;
 
     private CircleImageView mProfilePicture;
     private TextView mName;
 
-    private Button mProfilePictureBtn,btn_changename;
-
+    private Button mProfilePictureBtn,btn_changename, messages_btn;
     private static final int Gallery_pick = 1;
 
     private StorageReference mStorageRef;
@@ -75,6 +75,7 @@ public class UserSettingsActivity extends AppCompatActivity {
         picloadbar = (ProgressBar)findViewById(R.id.pic_loadbar);
         btn_changename = (Button)findViewById(R.id.btn_name);
         mProfilePictureBtn = (Button) findViewById(R.id.update_ppic);
+        messages_btn = (Button) findViewById(R.id.messages);
 
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -83,6 +84,7 @@ public class UserSettingsActivity extends AppCompatActivity {
         String current_uid = mCurrentUser.getUid();
 
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
+
 
         mUserDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -133,7 +135,14 @@ public class UserSettingsActivity extends AppCompatActivity {
             }
         });
 
-
+        messages_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MessagesActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     @Override
@@ -228,7 +237,7 @@ public class UserSettingsActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(newname.getText().toString())) {
                     Toast.makeText(UserSettingsActivity.this,"name  field empty",Toast.LENGTH_SHORT).show();
 
-                }else{
+                } else {
                     mUserDatabase.child("name").setValue(newname.getText().toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {

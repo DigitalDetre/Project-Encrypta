@@ -75,8 +75,17 @@
         android:id="@+id/update_ppic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="300dp"
+        android:layout_above="@+id/messages"
+        android:layout_marginBottom="-45dp"
         android:text="@string/change_profile_picture" />
+
+    <Button
+        android:id="@+id/messages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="250dp"
+        android:layout_marginTop="45dp"
+        android:text="Messages" />
 
 </RelativeLayout>
