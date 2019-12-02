@@ -42,6 +42,7 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.UserHolder> {
+
     private StorageReference mStorageRef;
     Activity activity;
     ArrayList<usermodel> Data;
@@ -61,7 +62,6 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
         FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
         uid = current_user.getUid();
     }
-
 
     @NonNull
     @Override
@@ -89,7 +89,6 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
             holder.request_text.setVisibility(View.GONE);
         }
         else {
-
             // if we are already friends
             myDatabase = FirebaseDatabase.getInstance().getReference().child("FriendList").child(uid).child(Data.get(position).getParentID());
             myDatabase.addValueEventListener(new ValueEventListener() {
@@ -99,21 +98,16 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
                         holder.SendReq.setImageResource(R.drawable.ic_friends_grey);
                         holder.request_text.setText("Unfriend");
                         WorkStatus = 1;
-
                     }
-
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
-
             });
 
             // if he already sent me the request
-
-
             myDatabase = FirebaseDatabase.getInstance().getReference().child("FriendRequest").child(uid);
             myDatabase.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -131,8 +125,6 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
 
                 }
             });
-
-
 
             // Check if i already sent the request
             myDatabase = FirebaseDatabase.getInstance().getReference().child("FriendRequest").child(Data.get(position).getParentID());
@@ -153,21 +145,14 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
 
                 }
             });
-
         }
 
         holder.name.setText(Data.get(position).getName());
         holder.username.setText("@"+Data.get(position).getUsername());
 
-
-
-
-
-
         holder.SendReq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-
 
                 if(!uid.contentEquals(Data.get(position).getParentID())){
                     //if user is not his friend
@@ -190,20 +175,13 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
                     }
                     //if user is his friend
                     else if(WorkStatus==1){
-
                         Dialog(Data.get(position).getParentID(),holder);
-
                     }
                     //if user already sent him request
                     else if(WorkStatus==2){
-
                         respond(Data.get(position).getParentID());
-
                     }
-
-
                     else if(WorkStatus==3){
-
                         myDatabase = FirebaseDatabase.getInstance().getReference().child("FriendRequest");
                         myDatabase.child(Data.get(position).getParentID()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -211,12 +189,8 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
                                 holder.SendReq.setImageResource(R.drawable.ic_add_userblue);
                                 holder.request_text.setText("Send Request");
                                 WorkStatus=0;
-
                             }
                         });
-
-
-
                     }
                 }else{
                     Toast.makeText(activity,"CODE TO OPEN OWN PROFIle",Toast.LENGTH_SHORT).show();
@@ -224,7 +198,6 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
                 }
             }
         });
-
     }
 
     @Override
@@ -249,10 +222,7 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
         }
     }
 
-
-
     void SetProfilePicture(StorageReference reference, final CircleImageView imageView){
-
         final long ONE_MEGABYTE = 1024 * 1024;
         reference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
@@ -265,18 +235,15 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
             @Override
             public void onFailure(@NonNull Exception exception) {
                 Toast.makeText(activity,"unable to load profile pic",Toast.LENGTH_SHORT).show();
-
                 imageView.setImageResource(R.mipmap.default_icon);
             }
         });
     }
 
-
     // UNFRIEND DIALOG START
     private void Dialog(final String friendkey, final UserHolder holder){
         if(dialog!=null) {
             if (dialog.isShowing()) {
-
                 dialog.dismiss();
             }
         }
@@ -301,7 +268,6 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
             }
         });
         dialog.setView(view);
-
         dialog.show();
     }
 
@@ -315,8 +281,6 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
         d.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-
-
                 DatabaseReference d2 = myDatabase.child(frndkey).child(uid);
                 d2.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -328,27 +292,17 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
                             holder.SendReq.setImageResource(R.drawable.ic_add_userblue);
                             holder.request_text.setText("Send Request");
                             WorkStatus=0;
-
                         }
                     }
                 });
-
-
-
             }
         });
-
-
     }
-
-//UNFRIED DIALOG END
-
-
+// UNFRIEND DIALOG END
 
     private void respond(final String friendkey){
         if( respond_dialog!=null) {
             if (respond_dialog.isShowing()) {
-
                 respond_dialog.dismiss();
             }
         }
@@ -367,11 +321,9 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
                 HashMap<String, String> userMap = new HashMap<>();
                 userMap.put("Status","Friends");
 
-
                 d.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-
 
                         DatabaseReference d2 = myDatabase.child(friendkey).child(uid);
                         HashMap<String, String> userMap2 = new HashMap<>();
@@ -387,21 +339,14 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
                                 }
                             }
                         });
-
-
-
                     }
                 });
-
-
-
-
             }
         });
+
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 DeleteReq(friendkey);
                 notifyDataSetChanged();
             }
@@ -409,7 +354,6 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
 
         respond_dialog.setView(view);
         respond_dialog.show();
-
     }
 
     void DeleteReq(String friendkey){
@@ -417,12 +361,9 @@ public class UserFoundAdapter extends RecyclerView.Adapter<UserFoundAdapter.User
         myDatabase.child(uid).child(friendkey).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-
                 respond_dialog.dismiss();
                 notifyDataSetChanged();
             }
         });
-
     }
-
 }

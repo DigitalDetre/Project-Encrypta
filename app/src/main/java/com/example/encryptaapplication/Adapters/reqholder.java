@@ -19,7 +19,6 @@ public class reqholder extends RecyclerView.ViewHolder {
     TextView username;
     ImageButton action;
 
-
     public reqholder(@NonNull View itemView) {
         super(itemView);
 
@@ -49,7 +48,4 @@ public class reqholder extends RecyclerView.ViewHolder {
     public ImageButton getAction() {
         return action;
     }
-
-
-
 }
