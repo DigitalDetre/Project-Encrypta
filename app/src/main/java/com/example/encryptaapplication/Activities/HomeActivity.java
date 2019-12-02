@@ -15,6 +15,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+// Displays the home page
 public class HomeActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;

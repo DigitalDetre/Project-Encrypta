@@ -47,6 +47,7 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+// Displays the user settings page
 public class UserSettingsActivity extends AppCompatActivity {
 
     private DatabaseReference mUserDatabase;

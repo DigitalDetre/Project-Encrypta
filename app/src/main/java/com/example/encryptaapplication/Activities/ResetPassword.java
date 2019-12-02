@@ -16,9 +16,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
+// Allows the user to reset their password if it was forgotten
 public class ResetPassword extends AppCompatActivity {
 
-    // variables
+    // Variables
     EditText email;
     Button cancel_btn, continue_btn;
     FirebaseAuth auth;

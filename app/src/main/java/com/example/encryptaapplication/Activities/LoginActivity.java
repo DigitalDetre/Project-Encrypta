@@ -35,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Iterator;
 
+// Displays the login page
 public class LoginActivity extends AppCompatActivity {
 
     Button login_btn, forgot_btn, cancel_btn;
@@ -129,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // forgot takes user to forgot password page
+        // Forgot takes user to forgot password page
         // TODO: CREATE FORGOT PASSWORD PAGE
         forgot_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +142,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+    // Allows the user to login using email and password
     private void login(String email_username,String entered_password){
         if (isValidPassword(entered_password)) {
             mAuth.signInWithEmailAndPassword(email_username, entered_password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {

@@ -226,7 +226,7 @@ public class FriendRequestsFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                //Two steps (first)
+                // Two steps (first)
                 myDatabase = FirebaseDatabase.getInstance().getReference().child(getContext().getString(R.string.FriendList));
 
                 DatabaseReference d = myDatabase.child(uid).child(friendkey);
@@ -265,6 +265,7 @@ public class FriendRequestsFragment extends Fragment {
         dialog.show();
     }
 
+    // Allows the user to delete the sent friend request
     void DeleteReq(String friendkey){
         myDatabase = FirebaseDatabase.getInstance().getReference().child("FriendRequest");
         myDatabase.child(uid).child(friendkey).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {

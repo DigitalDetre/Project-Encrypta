@@ -29,7 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-
+// Gives the add friends function
 public class AddFriends extends Activity {
 
     private DatabaseReference myDatabase;
@@ -48,6 +48,8 @@ public class AddFriends extends Activity {
         search_edittext  = (EditText)findViewById(R.id.friend_edittext);
         searchbutton  = (ImageButton) findViewById(R.id.friend_search);
         mRecyclerview = (RecyclerView)findViewById(R.id.friend_recyclerview);
+
+        // Allows user to add friends by searching for the username
         searchbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
