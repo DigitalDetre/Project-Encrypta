@@ -176,11 +176,7 @@ public class ContactsFragment extends Fragment {
         };
         mRecyclerview.setAdapter(firebaseRecyclerAdapter);
     }
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 4f61450925ba322a8b139eea33071dd08c0a1cdc
+    
     void SetProfilePicture(StorageReference reference, final CircleImageView mProfilePicture){
         final long ONE_MEGABYTE = 1024 * 1024;
         reference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
