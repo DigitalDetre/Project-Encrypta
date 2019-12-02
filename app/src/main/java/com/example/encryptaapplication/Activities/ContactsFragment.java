@@ -189,10 +189,6 @@ public class ContactsFragment extends Fragment {
     }
 
 
-
-
-
-
     void SetProfilePicture(StorageReference reference, final CircleImageView mProfilePicture){
 
         final long ONE_MEGABYTE = 1024 * 1024;

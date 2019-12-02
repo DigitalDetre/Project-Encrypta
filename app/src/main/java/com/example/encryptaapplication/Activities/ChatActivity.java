@@ -61,7 +61,7 @@ public class ChatActivity extends AppCompatActivity {
         friendid = getIntent().getStringExtra("friend_id");
 
         reference1 = FirebaseDatabase.getInstance().getReference().child("Messages").child(uid+"_"+friendid);
-        reference2 = FirebaseDatabase.getInstance().getReference().child("Messages").child(friendid+"_"+uid);;
+        reference2 = FirebaseDatabase.getInstance().getReference().child("Messages").child(friendid+"_"+uid);
 
 
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -77,9 +77,26 @@ public class ChatActivity extends AppCompatActivity {
                     messageArea.setText("");
                 }
 
+                // enacts the deletion policy while sending a new message
+                deletion_policy = FirebaseDatabase.getInstance().getReference().child("Users").child(uid).child("deletion_policy");
+                other_user_read_flag = FirebaseDatabase.getInstance().getReference().child("Users").child(friendid).child("read_flag");
+
+                other_user_read_flag.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String flag = dataSnapshot.getValue().toString().trim();
+                        if (flag.compareTo("true") == 0) {
+                            enact_deleting_policy();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
-
 
         reference1.addChildEventListener(new ChildEventListener() {
             @Override
@@ -119,6 +136,7 @@ public class ChatActivity extends AppCompatActivity {
 
         });
 
+        // enacts the policy after leave and enter the message winoow
         deletion_policy = FirebaseDatabase.getInstance().getReference().child("Users").child(uid).child("deletion_policy");
         other_user_read_flag = FirebaseDatabase.getInstance().getReference().child("Users").child(friendid).child("read_flag");
 
@@ -164,7 +182,7 @@ public class ChatActivity extends AppCompatActivity {
     public void enact_deleting_policy() {
         deletion_policy.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                 String deletepol = dataSnapshot.getValue(String.class);
                 int time;
                 long timecountinMilliseconds;
@@ -180,6 +198,7 @@ public class ChatActivity extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         reference2.removeValue();
+
                                     }
                                 },
                                 timecountinMilliseconds);
