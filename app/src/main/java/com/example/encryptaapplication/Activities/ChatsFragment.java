@@ -1,6 +1,5 @@
 package com.example.encryptaapplication.Activities;
 
-
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,11 +15,9 @@ import com.example.encryptaapplication.R;
  */
 public class ChatsFragment extends Fragment {
 
-
     public ChatsFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,5 +25,4 @@ public class ChatsFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_chats, container, false);
     }
-
 }

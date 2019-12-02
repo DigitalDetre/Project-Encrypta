@@ -85,12 +85,9 @@ public class UserSettingsActivity extends AppCompatActivity {
 
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
 
-
         mUserDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
                 try {
                     String name = dataSnapshot.child("name").getValue().toString();
                     String username = dataSnapshot.child("username").getValue().toString();
@@ -101,7 +98,6 @@ public class UserSettingsActivity extends AppCompatActivity {
                     mUsername.setText(username);
                     final StorageReference ref = mStorageRef.child("profile_pic").child(image);
                     SetProfilePicture(ref);
-
 
                 }catch (NullPointerException e){
                     e.printStackTrace();
@@ -118,14 +114,11 @@ public class UserSettingsActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP_MR1)
             @Override
             public void onClick(View v) {
-
                 Intent gallery = new Intent();
                 gallery.setType("image/*");
                 gallery.setAction(Intent.ACTION_GET_CONTENT);
 
                 startActivityForResult(Intent.createChooser(gallery, "Select Image"), Gallery_pick);
-
-
             }
         });
         btn_changename.setOnClickListener(new View.OnClickListener() {
@@ -153,12 +146,10 @@ public class UserSettingsActivity extends AppCompatActivity {
 
             Uri imageUri = data.getData();
 
-
             CropImage.activity(imageUri)
                     .setAspectRatio(1, 1)
                     .setMinCropWindowSize(500, 500)
                     .start(this);
-
         }
 
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
@@ -175,21 +166,15 @@ public class UserSettingsActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                         if(task.isSuccessful()){
-
                             mUserDatabase.child("image").setValue(profile_pic_name).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     SetProfilePicture(filepath);
                                 }
                             });
-
-
-
                         }else{
                             Toast.makeText(UserSettingsActivity.this,"error not uploading",Toast.LENGTH_LONG).show();
-
                         }
-
                     }
                 });
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
@@ -197,7 +182,6 @@ public class UserSettingsActivity extends AppCompatActivity {
             }
         }
     }
-
 
     void SetProfilePicture(StorageReference reference){
         picloadbar.setVisibility(View.VISIBLE);
@@ -221,7 +205,6 @@ public class UserSettingsActivity extends AppCompatActivity {
     private void Dialog(){
         if(dialog!=null) {
             if (dialog.isShowing()) {
-
                 dialog.dismiss();
             }
         }
@@ -236,7 +219,6 @@ public class UserSettingsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (TextUtils.isEmpty(newname.getText().toString())) {
                     Toast.makeText(UserSettingsActivity.this,"name  field empty",Toast.LENGTH_SHORT).show();
-
                 } else {
                     mUserDatabase.child("name").setValue(newname.getText().toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -244,10 +226,8 @@ public class UserSettingsActivity extends AppCompatActivity {
                             Toast.makeText(UserSettingsActivity.this,"name is changed",Toast.LENGTH_SHORT).show();
                             mName.setText(newname.getText().toString());
                             dialog.dismiss();
-
                         }
                     });
-
                 }
             }
         });
@@ -260,10 +240,5 @@ public class UserSettingsActivity extends AppCompatActivity {
 
         dialog.setView(view);
         dialog.show();
-
     }
-
-
-
 }
-

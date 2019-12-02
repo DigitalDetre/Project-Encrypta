@@ -59,7 +59,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         mSignupProgress = new ProgressDialog(this);
 
-
         // cancel takes user back to main page
         cancel_btn.setOnClickListener(new View.OnClickListener() {
 
@@ -84,7 +83,6 @@ public class SignUpActivity extends AppCompatActivity {
                                 "12"    /* minimumVersion */)
                         .build();
 
-
         edittextUsername.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
@@ -100,8 +98,6 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-
                 myDatabase = FirebaseDatabase.getInstance().getReference();
                 Query query = myDatabase.child("Users").orderByChild("username").equalTo(charSequence.toString());
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -111,13 +107,10 @@ public class SignUpActivity extends AppCompatActivity {
                             userexists=true;
                             Toast.makeText(SignUpActivity.this,"Username exist",Toast.LENGTH_SHORT).show();
                             edittextUsername.setTextColor(Color.RED);
-
-
-                        }else{
+                        }
+                        else{
                             userexists = false;
                             edittextUsername.setTextColor(Color.GREEN);
-
-
                         }
                     }
 
@@ -131,18 +124,13 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
 
-
-
             }
         });
-
-
 
         btnSingup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(!userexists){
-
                     final String email = editTextEmail.getText().toString();
                     final String password = editTextPassword.getText().toString();
 
@@ -156,9 +144,7 @@ public class SignUpActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
 
-
                                 if (task.isSuccessful()) {
-
                                     mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
@@ -187,30 +173,26 @@ public class SignUpActivity extends AppCompatActivity {
                                                     }
                                                 });
 
-                                            } else {
+                                            }
+                                            else {
                                                 mSignupProgress.hide();
                                                 Toast.makeText(SignUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                             }
                                         }
                                     });
-
-                                } else {
+                                }
+                                else {
                                     Toast.makeText(SignUpActivity.this, "Account already exists", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
-
                     }
-
-                }else {
-                    Toast.makeText(SignUpActivity.this, "Change Username", Toast.LENGTH_SHORT).show();
-
-
                 }
-
+                else {
+                    Toast.makeText(SignUpActivity.this, "Change Username", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-
     }
     private boolean isValidEmail(CharSequence target) {
         if (TextUtils.isEmpty(target)) {
@@ -233,7 +215,6 @@ public class SignUpActivity extends AppCompatActivity {
         password = editTextPassword.getText().toString();
         password2 = editTextPassword2.getText().toString();
 
-
         if(password.equals(password2)){
             if(password.length() >= 8 && password.length() <=16){
                 return true;
@@ -246,5 +227,4 @@ public class SignUpActivity extends AppCompatActivity {
             return false;
         }
     }
-
 }

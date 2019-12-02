@@ -55,6 +55,7 @@ import static android.view.View.VISIBLE;
  * A simple {@link Fragment} subclass.
  */
 public class ContactsFragment extends Fragment {
+
     private RecyclerView mRecyclerview;
     StorageReference storageReference;
     private DatabaseReference myDatabase;
@@ -83,15 +84,11 @@ public class ContactsFragment extends Fragment {
         return view;
     }
 
-
-
-
     void SetupRecyclerview(){
         myDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.exists()){
-
                     nodatatext.setVisibility(VISIBLE);
                     loadingbar.setVisibility(GONE);
                 } else {
@@ -119,7 +116,6 @@ public class ContactsFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if(dataSnapshot.exists()){
                             try {
-
                                 String name = dataSnapshot.child("name").getValue().toString();
                                 String username = dataSnapshot.child("username").getValue().toString();
                                 final String image = dataSnapshot.child("image").getValue().toString();
@@ -137,12 +133,9 @@ public class ContactsFragment extends Fragment {
 
                                 cntholder.getName().setText(name);
 
-
                             } catch (NullPointerException e) {
                                 e.printStackTrace();
                             }
-
-
                         }
                     }
 
@@ -178,41 +171,28 @@ public class ContactsFragment extends Fragment {
             public cntholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.contact_friendlist_row, parent, false);
-
                 return new cntholder(view);
             }
         };
-
         mRecyclerview.setAdapter(firebaseRecyclerAdapter);
-
-
     }
 
-
-
-
-
-
     void SetProfilePicture(StorageReference reference, final CircleImageView mProfilePicture){
-
         final long ONE_MEGABYTE = 1024 * 1024;
         reference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytesPrm) {
                 Bitmap bmp = BitmapFactory.decodeByteArray(bytesPrm, 0, bytesPrm.length);
                 mProfilePicture.setImageBitmap(bmp);
-
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 Toast.makeText(getContext(),"unable to load profile pic",Toast.LENGTH_SHORT).show();
-
                 mProfilePicture.setImageResource(R.mipmap.default_icon);
             }
         });
     }
-
 
     @Override
     public void onStart() {
@@ -233,12 +213,10 @@ public class ContactsFragment extends Fragment {
 
         DatabaseReference d = myDatabase.child(uid).child(friendkey);
 
-        final String  frndkey = friendkey;
+        final String frndkey = friendkey;
         d.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-
-
                 DatabaseReference d2 = myDatabase.child(frndkey).child(uid);
                 d2.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -246,24 +224,16 @@ public class ContactsFragment extends Fragment {
                         if(task.isSuccessful())
                         {
                             Toast.makeText(getContext(),"Unfriend Succesfully",Toast.LENGTH_SHORT).show();
-
                         }
                     }
                 });
-
-
-
             }
         });
-
-
     }
-
 
     private void Dialog(final String friendkey){
         if(dialog!=null) {
             if (dialog.isShowing()) {
-
                 dialog.dismiss();
             }
         }
@@ -280,7 +250,6 @@ public class ContactsFragment extends Fragment {
                 dialog.dismiss();
             }
         });
-
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -288,9 +257,6 @@ public class ContactsFragment extends Fragment {
             }
         });
         dialog.setView(view);
-
         dialog.show();
     }
-
-
 }

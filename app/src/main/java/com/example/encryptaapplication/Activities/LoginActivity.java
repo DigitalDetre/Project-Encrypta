@@ -58,7 +58,6 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-
         // cancel takes user back to main page
         cancel_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +68,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
         login_btn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -78,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                 final String entered_password = password.getText().toString();
 
                 switch (isValidEmail(entered_name)) {
-                    //if username
+                    // if username
                     case 1:
                         Dialog();
                         Log.d("EMAIL CHECK","we are here");
@@ -94,27 +92,19 @@ public class LoginActivity extends AppCompatActivity {
                                     {
                                         Iterable<DataSnapshot> child =   postSnapshot.getChildren();
 
-
                                         while (child.iterator().hasNext()){
                                             DataSnapshot dasta =child.iterator().next();
                                             if(dasta.getKey().contentEquals("email")){
                                                 data=dasta.getValue().toString();
                                                 login(data,entered_password);
                                             }
-
                                         }
-
                                     }
-
-
-
                                 }else{
                                     if(dialog!=null&dialog.isShowing()){
-
                                         dialog.dismiss();
                                     }
                                     Toast.makeText(LoginActivity.this, "Incorrect login", Toast.LENGTH_SHORT).show();
-
                                 }
                             }
 
@@ -123,7 +113,6 @@ public class LoginActivity extends AppCompatActivity {
 
                             }
                         });
-
                         break;
                     case 2:
                         Dialog();
@@ -132,14 +121,11 @@ public class LoginActivity extends AppCompatActivity {
                     default:
                         if(dialog!=null) {
                             if (dialog.isShowing()) {
-
                                 dialog.dismiss();
                             }
                         }
-
                         break;
                 }
-
             }
         });
 
@@ -154,12 +140,9 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
     private void login(String email_username,String entered_password){
         if (isValidPassword(entered_password)) {
-
-
             mAuth.signInWithEmailAndPassword(email_username, entered_password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -171,7 +154,6 @@ public class LoginActivity extends AppCompatActivity {
                             startActivity(intent);
                             if(dialog!=null) {
                                 if (dialog.isShowing()) {
-
                                     dialog.dismiss();
                                 }
                             }
@@ -179,7 +161,6 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             if(dialog!=null) {
                                 if (dialog.isShowing()) {
-
                                     dialog.dismiss();
                                 }
                             }
@@ -188,7 +169,6 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         if(dialog!=null) {
                             if (dialog.isShowing()) {
-
                                 dialog.dismiss();
                             }
                         }
@@ -197,14 +177,11 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         }
-
-
     }
 
     private void Dialog(){
         if(dialog!=null) {
             if (dialog.isShowing()) {
-
                 dialog.dismiss();
             }
         }
@@ -212,7 +189,6 @@ public class LoginActivity extends AppCompatActivity {
         View view = LayoutInflater.from(this).inflate(R.layout.loading,null,false);
         dialog.setView(view);
         dialog.show();
-
     }
 
     private int isValidEmail(CharSequence target) {
@@ -229,7 +205,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public boolean isValidPassword(String password){
-
         if(password.length() >= 8 && password.length() <=16){
             return true;
         }else {
@@ -237,8 +212,4 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         }
     }
-
-
-
 }
-

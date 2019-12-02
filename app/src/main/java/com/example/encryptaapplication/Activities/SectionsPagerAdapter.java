@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-
     public SectionsPagerAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -25,7 +24,6 @@ class SectionsPagerAdapter extends FragmentPagerAdapter {
                 return  contactsFragment;
             default:
                 return null;
-
         }
     }
 
@@ -45,6 +43,5 @@ class SectionsPagerAdapter extends FragmentPagerAdapter {
             default:
                 return null;
         }
-
     }
 }
