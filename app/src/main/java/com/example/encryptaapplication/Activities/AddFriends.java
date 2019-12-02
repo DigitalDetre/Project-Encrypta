@@ -31,6 +31,7 @@ import java.util.ArrayList;
 
 
 public class AddFriends extends Activity {
+
     private DatabaseReference myDatabase;
     RecyclerView mRecyclerview ;
     EditText search_edittext;
@@ -52,9 +53,8 @@ public class AddFriends extends Activity {
             public void onClick(View view) {
                 if (TextUtils.isEmpty(search_edittext.getText().toString())) {
                     Toast.makeText(AddFriends.this,"username field empty",Toast.LENGTH_SHORT).show();
-
-                }else{
-
+                }
+                else{
                     Dialog();
                     myDatabase = FirebaseDatabase.getInstance().getReference();
                     Query query = myDatabase.child("Users").orderByChild("username").equalTo(search_edittext.getText().toString().toLowerCase());
@@ -79,7 +79,6 @@ public class AddFriends extends Activity {
                                     while (child.iterator().hasNext()){
                                         DataSnapshot dasta =child.iterator().next();
 
-
                                         if(dasta.getKey().contentEquals("email")){
                                             data=dasta.getValue().toString();
                                             Log.d("DATA email",data);
@@ -101,43 +100,36 @@ public class AddFriends extends Activity {
                                             Log.d("DATA username",data);
                                             username = data;
                                         }
-
                                     }
                                 }
-
                                 founduser.add(new usermodel(name,username,profile_image,email,ParentID));
                                 SetupRecyclerView();
-                                if(dialog!=null&dialog.isShowing()){ dialog.dismiss(); }
-
+                                if(dialog!=null&dialog.isShowing()){
+                                    dialog.dismiss();
+                                }
                             }else{
-                                if(dialog!=null&dialog.isShowing()){ dialog.dismiss(); }
+                                if(dialog!=null&dialog.isShowing()){
+                                    dialog.dismiss();
+                                }
                                 Toast.makeText(AddFriends.this, "No UserFound", Toast.LENGTH_SHORT).show();
-
                             }
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
                             if(dialog!=null&dialog.isShowing()){
-
                                 dialog.dismiss();
                             }
-
                         }
                     });
-
                 }
             }
         });
-
     }
-
-
 
     private void Dialog(){
         if(dialog!=null) {
             if (dialog.isShowing()) {
-
                 dialog.dismiss();
             }
         }
@@ -145,7 +137,6 @@ public class AddFriends extends Activity {
         View view = LayoutInflater.from(this).inflate(R.layout.loading,null,false);
         dialog.setView(view);
         dialog.show();
-
     }
 
     void SetupRecyclerView(){
@@ -153,7 +144,5 @@ public class AddFriends extends Activity {
         mRecyclerview.setLayoutManager(layoutManager);
         UserFoundAdapter friendadapter = new UserFoundAdapter(this,founduser);
         mRecyclerview.setAdapter(friendadapter);
-
     }
-
 }

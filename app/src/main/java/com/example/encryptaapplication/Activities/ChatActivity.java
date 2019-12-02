@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChatActivity extends AppCompatActivity {
+
     LinearLayout layout;
     RelativeLayout layout_2;
     ImageView sendButton;
@@ -42,6 +43,7 @@ public class ChatActivity extends AppCompatActivity {
     ScrollView scrollView;
     private DatabaseReference reference1,reference2, deletion_policy, other_user_read_flag;
     String uid,friendid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,8 +134,6 @@ public class ChatActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-
-
         });
 
         // enacts the policy after leave and enter the message winoow
@@ -160,7 +160,6 @@ public class ChatActivity extends AppCompatActivity {
         TextView textView = new TextView(this);
         textView.setText(message);
         textView.setTextSize(20);
-
 
         LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
@@ -215,7 +214,6 @@ public class ChatActivity extends AppCompatActivity {
                                 },
                                 timecountinMilliseconds
                         );
-
                     } else if (deletepol.compareTo("24 hours") == 0) {
                         time = 1440;
                         timecountinMilliseconds = time * 1000;
@@ -228,7 +226,6 @@ public class ChatActivity extends AppCompatActivity {
                                 },
                                 timecountinMilliseconds
                         );
-
                     } else {
                         // do not delete messages
                     }
@@ -243,6 +240,4 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }

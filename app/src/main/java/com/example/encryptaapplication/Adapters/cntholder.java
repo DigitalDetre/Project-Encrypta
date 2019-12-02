@@ -64,7 +64,4 @@ public class cntholder extends RecyclerView.ViewHolder {
     public ImageButton getAction() {
         return action;
     }
-
-
-
 }

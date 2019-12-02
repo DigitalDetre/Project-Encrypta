@@ -40,7 +40,6 @@ public class ResetPassword extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
                 finish();
-
             }
         });
 
@@ -65,8 +64,8 @@ public class ResetPassword extends AppCompatActivity {
                 }
             }
         });
-
     }
+
     private boolean isValidEmail(CharSequence target) {
         if (TextUtils.isEmpty(target)) {
             Toast.makeText(ResetPassword.this,"Email field empty",Toast.LENGTH_SHORT).show();

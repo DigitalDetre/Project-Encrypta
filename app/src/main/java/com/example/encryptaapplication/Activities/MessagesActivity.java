@@ -49,8 +49,6 @@ public class MessagesActivity extends AppCompatActivity{
         spinner = findViewById(R.id.spinner);
         change_btn = findViewById(R.id.change_btn);
 
-
-
         change_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,7 +72,6 @@ public class MessagesActivity extends AppCompatActivity{
 
                                 }
                             });
-
                         }
                     });
                 } else {
@@ -88,9 +85,7 @@ public class MessagesActivity extends AppCompatActivity{
                         }
                     });
                 }
-
             }
         });
     }
-
 }

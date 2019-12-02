@@ -55,6 +55,7 @@ import static androidx.recyclerview.widget.RecyclerView.*;
  * A simple {@link Fragment} subclass.
  */
 public class FriendRequestsFragment extends Fragment {
+
     private RecyclerView mRecyclerview;
     StorageReference storageReference;
     private DatabaseReference myDatabase;
@@ -90,7 +91,6 @@ public class FriendRequestsFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.exists()){
-
                     nodatatext.setVisibility(VISIBLE);
                     loadingbar.setVisibility(GONE);
                 }else {
@@ -104,22 +104,12 @@ public class FriendRequestsFragment extends Fragment {
             }
         });
 
-
-
-
-
         FirebaseRecyclerOptions<usermodel> options =
                 new FirebaseRecyclerOptions.Builder<usermodel>()
                         .setQuery(myDatabase, usermodel.class)
                         .build();
 
-
-
-
-
         firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<usermodel, reqholder>(options) {
-
-
             @Override
             public void onError(@NonNull DatabaseError error) {
                 Log.d("ERROR",error.getMessage().toString());
@@ -134,7 +124,6 @@ public class FriendRequestsFragment extends Fragment {
                 myDatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                         if (dataSnapshot.exists()) {
                             Log.d( "CHECK ","extracting user data");
                             try {
@@ -155,7 +144,6 @@ public class FriendRequestsFragment extends Fragment {
                                 holder.getUsername().setText(username);
 
                                 holder.getName().setText(name);
-
 
                             } catch (NullPointerException e) {
                                 e.printStackTrace();
@@ -188,12 +176,9 @@ public class FriendRequestsFragment extends Fragment {
             }
         };
         mRecyclerview.setAdapter(firebaseRecyclerAdapter);
-
     }
 
-
     void SetProfilePicture(StorageReference reference, final CircleImageView mProfilePicture){
-
         final long ONE_MEGABYTE = 1024 * 1024;
         reference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
@@ -212,7 +197,6 @@ public class FriendRequestsFragment extends Fragment {
         });
     }
 
-
     @Override
     public void onStart() {
         super.onStart();
@@ -224,7 +208,6 @@ public class FriendRequestsFragment extends Fragment {
         super.onStop();
         firebaseRecyclerAdapter.stopListening();
     }
-
 
     private void respond(final String friendkey){
         if(dialog!=null) {
@@ -250,11 +233,9 @@ public class FriendRequestsFragment extends Fragment {
                 HashMap<String, String> userMap = new HashMap<>();
                 userMap.put("Status","Friends");
 
-
                 d.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-
 
                         DatabaseReference d2 = myDatabase.child(friendkey).child(uid);
                         HashMap<String, String> userMap2 = new HashMap<>();
@@ -266,33 +247,22 @@ public class FriendRequestsFragment extends Fragment {
                                 if(task.isSuccessful())
                                 {
                                     DeleteReq(friendkey);
-
                                 }
                             }
                         });
-
-
-
                     }
                 });
-
-
-
-
             }
         });
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 DeleteReq(friendkey);
                 firebaseRecyclerAdapter.notifyDataSetChanged();
             }
         });
-
         dialog.setView(view);
         dialog.show();
-
     }
 
     void DeleteReq(String friendkey){
@@ -302,14 +272,7 @@ public class FriendRequestsFragment extends Fragment {
             public void onComplete(@NonNull Task<Void> task) {
                 firebaseRecyclerAdapter.notifyDataSetChanged();
                 dialog.dismiss();
-
-
-
             }
         });
-
-
     }
-
-
 }

@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class HomeActivity extends AppCompatActivity {
+
     private FirebaseAuth mAuth;
     private Toolbar mToolBar;
     private ViewPager mViewPager;
@@ -41,7 +42,6 @@ public class HomeActivity extends AppCompatActivity {
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
-
     // Checks if the user is already logged in if not go back to the main page
     @Override
     public void onStart() {
@@ -50,7 +50,6 @@ public class HomeActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         if(currentUser == null){
-
             Intent mainIntent = new Intent(HomeActivity.this, MainActivity.class);
             startActivity(mainIntent);
             finish();
@@ -69,7 +68,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onOptionsItemSelected(item);
 
         if(item.getItemId() == R.id.home_logout){
-
             FirebaseAuth.getInstance().signOut();
 
             Intent mainIntent = new Intent(HomeActivity.this, MainActivity.class);
@@ -77,20 +75,13 @@ public class HomeActivity extends AppCompatActivity {
             finish();
         }
         if(item.getItemId() == R.id.home_settings){
-
             Intent settingsIntent = new Intent(HomeActivity.this, UserSettingsActivity.class);
             startActivity(settingsIntent);
-
         }
         if(item.getItemId()==R.id.home_all){
-
             Intent addafriend = new Intent(HomeActivity.this, AddFriends.class);
             startActivity(addafriend);
         }
-
         return true;
     }
-
-
-
 }
