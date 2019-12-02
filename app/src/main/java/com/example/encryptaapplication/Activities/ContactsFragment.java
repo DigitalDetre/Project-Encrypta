@@ -58,12 +58,12 @@ public class ContactsFragment extends Fragment {
     private RecyclerView mRecyclerview;
     StorageReference storageReference;
     private DatabaseReference myDatabase;
-    private String uid;
+    private String uid, friend_uid;
     FirebaseRecyclerAdapter<usermodel, cntholder> firebaseRecyclerAdapter;
     private AlertDialog dialog;
     ProgressBar loadingbar;
     private TextView nodatatext;
-
+    private DatabaseReference user_read_flag;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,6 +78,7 @@ public class ContactsFragment extends Fragment {
         myDatabase = FirebaseDatabase.getInstance().getReference().child("FriendList").child(uid);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerview.setLayoutManager(layoutManager);
+        user_read_flag = FirebaseDatabase.getInstance().getReference().child("Users").child(uid).child("read_flag");
         SetupRecyclerview();
         return view;
     }
@@ -93,7 +94,7 @@ public class ContactsFragment extends Fragment {
 
                     nodatatext.setVisibility(VISIBLE);
                     loadingbar.setVisibility(GONE);
-                }else {
+                } else {
                     nodatatext.setVisibility(GONE);
                 }
             }
@@ -123,7 +124,6 @@ public class ContactsFragment extends Fragment {
                                 String username = dataSnapshot.child("username").getValue().toString();
                                 final String image = dataSnapshot.child("image").getValue().toString();
                                 String email = dataSnapshot.child("email").getValue().toString();
-
                                 new Thread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -162,15 +162,14 @@ public class ContactsFragment extends Fragment {
                 holder.getOpenchat_layout().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        user_read_flag.setValue("true");
                         Intent ChatActivity = new Intent(getContext(), ChatActivity.class);
                         ChatActivity.putExtra("friend_id",getRef(position).getKey());
                         getContext().startActivity(ChatActivity);
                     }
+
                 });
-
-
-
-
+                user_read_flag.setValue("false");
                 loadingbar.setVisibility(GONE);
             }
 
@@ -185,6 +184,8 @@ public class ContactsFragment extends Fragment {
         };
 
         mRecyclerview.setAdapter(firebaseRecyclerAdapter);
+
+
     }
 
 

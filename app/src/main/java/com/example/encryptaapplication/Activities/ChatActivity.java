@@ -40,7 +40,7 @@ public class ChatActivity extends AppCompatActivity {
     ImageView sendButton;
     EditText messageArea;
     ScrollView scrollView;
-    private DatabaseReference reference1,reference2, deletion_policy;
+    private DatabaseReference reference1,reference2, deletion_policy, other_user_read_flag;
     String uid,friendid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +56,7 @@ public class ChatActivity extends AppCompatActivity {
         //getting current uid
         FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
         uid = current_user.getUid();
+
         //getting friend id from the contact fragment
         friendid = getIntent().getStringExtra("friend_id");
 
@@ -74,77 +75,11 @@ public class ChatActivity extends AppCompatActivity {
                     reference1.push().setValue(map);
                     reference2.push().setValue(map);
                     messageArea.setText("");
-
-                    deletion_policy = FirebaseDatabase.getInstance().getReference().child("Users").child(uid).child("deletion_policy");
-
-                    deletion_policy.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            String deletepol = dataSnapshot.getValue(String.class);
-                            int time;
-                            long timecountinMilliseconds;
-
-                            if (deletepol != null) {
-                                if (deletepol.compareTo("Instant") == 0) {
-                                    // prob need to implement a 'read' flag
-                                    time = 5;
-                                    timecountinMilliseconds = time * 1000;
-
-                                    new android.os.Handler().postDelayed(
-                                            new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    reference1.removeValue();
-                                                    reference2.removeValue();
-                                                }
-                                            },
-                                            timecountinMilliseconds);
-
-                                } else if (deletepol.compareTo("5 min") == 0) {
-                                    time = 300;
-                                    timecountinMilliseconds = time * 1000;
-                                    new android.os.Handler().postDelayed(
-                                            new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    reference1.removeValue();
-                                                    reference2.removeValue();
-                                                }
-                                            },
-                                            timecountinMilliseconds
-                                    );
-
-                                } else if (deletepol.compareTo("24 hours") == 0) {
-                                    time = 1440;
-                                    timecountinMilliseconds = time * 1000;
-                                    new android.os.Handler().postDelayed(
-                                            new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    reference1.removeValue();
-                                                    reference2.removeValue();
-                                                }
-                                            },
-                                            timecountinMilliseconds
-                                    );
-
-                                } else {
-                                    // do not delete messages
-                                }
-                            } else {
-                                Toast.makeText(ChatActivity.this, "Err: in deletion policy", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-
                 }
+
             }
         });
+
 
         reference1.addChildEventListener(new ChildEventListener() {
             @Override
@@ -183,6 +118,24 @@ public class ChatActivity extends AppCompatActivity {
 
 
         });
+
+        deletion_policy = FirebaseDatabase.getInstance().getReference().child("Users").child(uid).child("deletion_policy");
+        other_user_read_flag = FirebaseDatabase.getInstance().getReference().child("Users").child(friendid).child("read_flag");
+
+        other_user_read_flag.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String flag = dataSnapshot.getValue().toString().trim();
+                if (flag.compareTo("true") == 0) {
+                    enact_deleting_policy();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void addMessageBox(String message, int type){
@@ -206,6 +159,70 @@ public class ChatActivity extends AppCompatActivity {
         textView.setLayoutParams(lp2);
         layout.addView(textView);
         scrollView.fullScroll(View.FOCUS_DOWN);
+    }
+
+    public void enact_deleting_policy() {
+        deletion_policy.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String deletepol = dataSnapshot.getValue(String.class);
+                int time;
+                long timecountinMilliseconds;
+
+                if (deletepol != null) {
+                    if (deletepol.compareTo("Instant") == 0) {
+                        // prob need to implement a 'read' flag
+                        time = 5;
+                        timecountinMilliseconds = time * 1000;
+
+                        new android.os.Handler().postDelayed(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        reference2.removeValue();
+                                    }
+                                },
+                                timecountinMilliseconds);
+
+                    } else if (deletepol.compareTo("5 min") == 0) {
+                        time = 300;
+                        timecountinMilliseconds = time * 1000;
+                        new android.os.Handler().postDelayed(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        reference2.removeValue();
+                                    }
+                                },
+                                timecountinMilliseconds
+                        );
+
+                    } else if (deletepol.compareTo("24 hours") == 0) {
+                        time = 1440;
+                        timecountinMilliseconds = time * 1000;
+                        new android.os.Handler().postDelayed(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        reference2.removeValue();
+                                    }
+                                },
+                                timecountinMilliseconds
+                        );
+
+                    } else {
+                        // do not delete messages
+                    }
+                } else {
+                    Toast.makeText(ChatActivity.this, "Err: in deletion policy", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
 
