@@ -65,13 +65,13 @@ public class ChatActivity extends AppCompatActivity {
         reference1 = FirebaseDatabase.getInstance().getReference().child("Messages").child(uid+"_"+friendid);
         reference2 = FirebaseDatabase.getInstance().getReference().child("Messages").child(friendid+"_"+uid);
 
-
+        final HashMap<String, String> map = new HashMap<String, String>();
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String messageText = messageArea.getText().toString();
                 if(!messageText.equals("")){
-                    final HashMap<String, String> map = new HashMap<String, String>();
+
                     map.put("message", messageText);
                     map.put("user", uid);//UserDetails.username);
                     reference1.push().setValue(map);
@@ -83,7 +83,7 @@ public class ChatActivity extends AppCompatActivity {
                 deletion_policy = FirebaseDatabase.getInstance().getReference().child("Users").child(uid).child("deletion_policy");
                 other_user_read_flag = FirebaseDatabase.getInstance().getReference().child("Users").child(friendid).child("read_flag");
 
-                other_user_read_flag.addListenerForSingleValueEvent(new ValueEventListener() {
+                other_user_read_flag.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String flag = dataSnapshot.getValue().toString().trim();
@@ -136,24 +136,6 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        // enacts the policy after leave and enter the message winoow
-        deletion_policy = FirebaseDatabase.getInstance().getReference().child("Users").child(uid).child("deletion_policy");
-        other_user_read_flag = FirebaseDatabase.getInstance().getReference().child("Users").child(friendid).child("read_flag");
-
-        other_user_read_flag.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String flag = dataSnapshot.getValue().toString().trim();
-                if (flag.compareTo("true") == 0) {
-                    enact_deleting_policy();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
     public void addMessageBox(String message, int type){
@@ -179,6 +161,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     public void enact_deleting_policy() {
+
         deletion_policy.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
