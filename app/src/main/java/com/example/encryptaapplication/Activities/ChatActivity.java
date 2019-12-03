@@ -35,7 +35,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class ChatActivity extends AppCompatActivity {
 
     LinearLayout layout;
@@ -59,11 +58,11 @@ public class ChatActivity extends AppCompatActivity {
         messageArea = findViewById(R.id.messageArea);
         scrollView = findViewById(R.id.scrollView);
 
-        // Getting current uid
+        //getting current uid
         FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
         uid = current_user.getUid();
 
-        // Getting friend id from the contact fragment
+        //getting friend id from the contact fragment
         friendid = getIntent().getStringExtra("friend_id");
 
         reference1 = FirebaseDatabase.getInstance().getReference().child("Messages").child(uid+"_"+friendid);
@@ -85,7 +84,7 @@ public class ChatActivity extends AppCompatActivity {
                     messageArea.setText("");
                 }
 
-                // Enacts the deletion policy while sending a new message
+                // enacts the deletion policy while sending a new message
                 deletion_policy = FirebaseDatabase.getInstance().getReference().child("Users").child(uid).child("deletion_policy");
                 other_user_read_flag = FirebaseDatabase.getInstance().getReference().child("Users").child(friendid).child("read_flag");
 
@@ -146,7 +145,6 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
-    // Displays a message box on the chat layout
     public void addMessageBox(String message, int type){
         TextView textView = new TextView(this);
         textView.setText(message);
@@ -169,17 +167,12 @@ public class ChatActivity extends AppCompatActivity {
         scrollView.fullScroll(View.FOCUS_DOWN);
     }
 
-<<<<<<< HEAD
     public void delete_messages() {
         while (!reference2_messages.isEmpty()) {
             reference2.child(reference2_messages.get(0)).removeValue();
             reference2_messages.remove(0);
         }
     }
-=======
-    // Allows the user to set a deletion policy on messages
-    public void enact_deleting_policy() {
->>>>>>> 5a53f17bdeb0b159492156df7f9f230523013965
 
     public void enact_deleting_policy() {
         deletion_policy.addListenerForSingleValueEvent(new ValueEventListener() {
