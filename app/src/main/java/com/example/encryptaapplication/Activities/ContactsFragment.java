@@ -176,7 +176,8 @@ public class ContactsFragment extends Fragment {
         };
         mRecyclerview.setAdapter(firebaseRecyclerAdapter);
     }
-    
+
+    // Allows the user to set a profile picture
     void SetProfilePicture(StorageReference reference, final CircleImageView mProfilePicture){
         final long ONE_MEGABYTE = 1024 * 1024;
         reference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -206,7 +207,7 @@ public class ContactsFragment extends Fragment {
         firebaseRecyclerAdapter.stopListening();
     }
 
-    //UnFriend Function
+    // Allows the user to delete people on their friend's list
     void UnFriend( String friendkey){
 
         myDatabase = FirebaseDatabase.getInstance().getReference().child(getContext().getString(R.string.FriendList));

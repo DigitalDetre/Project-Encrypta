@@ -35,7 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
-
+// Gives the sign up function to the application
 public class SignUpActivity extends AppCompatActivity {
 
     private EditText editTextEmail,editTextPassword,editTextPassword2,edittextUsername;
