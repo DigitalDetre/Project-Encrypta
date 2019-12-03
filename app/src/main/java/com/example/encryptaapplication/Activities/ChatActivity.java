@@ -88,6 +88,9 @@ public class ChatActivity extends AppCompatActivity {
                 deletion_policy = FirebaseDatabase.getInstance().getReference().child("Users").child(uid).child("deletion_policy");
                 other_user_read_flag = FirebaseDatabase.getInstance().getReference().child("Users").child(friendid).child("read_flag");
 
+                if (other_user_read_flag.toString().compareTo("true") == 0)
+                    enact_deleting_policy();
+
                 other_user_read_flag.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
