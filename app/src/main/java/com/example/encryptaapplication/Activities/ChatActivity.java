@@ -31,6 +31,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,7 +43,9 @@ public class ChatActivity extends AppCompatActivity {
     EditText messageArea;
     ScrollView scrollView;
     private DatabaseReference reference1,reference2, deletion_policy, other_user_read_flag;
+    private ArrayList<String> reference2_messages = new ArrayList<>();
     String uid,friendid;
+    String reference = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +78,9 @@ public class ChatActivity extends AppCompatActivity {
                     map.put("message", messageText);
                     map.put("user", uid);//UserDetails.username);
                     reference1.push().setValue(map);
-                    reference2.push().setValue(map);
+                    reference = reference2.push().getKey();
+                    reference2.child(reference).setValue(map);
+                    reference2_messages.add(reference);
                     messageArea.setText("");
                 }
 
@@ -99,6 +104,8 @@ public class ChatActivity extends AppCompatActivity {
                 });
             }
         });
+
+
 
         reference1.addChildEventListener(new ChildEventListener() {
             @Override
@@ -160,8 +167,14 @@ public class ChatActivity extends AppCompatActivity {
         scrollView.fullScroll(View.FOCUS_DOWN);
     }
 
-    public void enact_deleting_policy() {
+    public void delete_messages() {
+        while (!reference2_messages.isEmpty()) {
+            reference2.child(reference2_messages.get(0)).removeValue();
+            reference2_messages.remove(0);
+        }
+    }
 
+    public void enact_deleting_policy() {
         deletion_policy.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
@@ -179,7 +192,7 @@ public class ChatActivity extends AppCompatActivity {
                                 new Runnable() {
                                     @Override
                                     public void run() {
-                                        reference2.removeValue();
+                                        delete_messages();
 
                                     }
                                 },
